@@ -2,6 +2,7 @@
 @section('title-page', 'Create new category')
 @section('content')
 <div class="page-body">
+    <!-- dd($errors) -->
     <!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
@@ -16,18 +17,19 @@
                             {!! csrf_field() !!}
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Name category</label>
-                                <input name="name" class="form-control" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="Enter name category">
+                                <input name="name" class="form-control <?php echo ($errors->first('name') ? 'is-invalid' : ' ') ?>" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="Enter name category">
+                                <div class="invalid-feedback">{{$errors->first('name')}}</div>
                             </div>
                             <fieldset class="mb-3">
                                 <div class="row">
                                     <label class="col-form-label col-sm-3 pt-0">Status</label>
                                     <div class="col-sm-9">
                                         <div class="form-check radio radio-primary">
-                                            <input checked class="form-check-input" id="radio11" type="radio" name="status" value="0">
+                                            <input checked class="form-check-input <?php echo ($errors->first('status') ? 'is-invalid' : ' ') ?>" id="radio11" type="radio" name="status" value="0">
                                             <label class="form-check-label" for="radio11">Show</label>
                                         </div>
                                         <div class="form-check radio radio-primary">
-                                            <input class="form-check-input" id="radio22" type="radio" name="status" value="1">
+                                            <input class="form-check-input <?php echo ($errors->first('status') ? 'is-invalid' : '') ?>" id="radio22" type="radio" name="status" value="1">
                                             <label class="form-check-label" for="radio22">Hidden</label>
                                         </div>
                                     </div>

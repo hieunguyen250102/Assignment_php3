@@ -3,6 +3,7 @@
 
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,78 +41,86 @@
 <body>
     <!-- Start Header Area -->
     <header class="header-section d-none d-xl-block">
-    <div class="header-wrapper">
-        <div class="header-bottom header-bottom-color--golden section-fluid sticky-header sticky-color--golden">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 d-flex align-items-center justify-content-between">
-                        <!-- Start Header Logo -->
-                        <div class="header-logo">
-                            <div class="logo">
-                                <a href="/"><img src="{{asset('/images/logo/logo_black.png')}}" alt=""></a>
+        <div class="header-wrapper">
+            <div class="header-bottom header-bottom-color--golden section-fluid sticky-header sticky-color--golden">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 d-flex align-items-center justify-content-between">
+                            <!-- Start Header Logo -->
+                            <div class="header-logo">
+                                <div class="logo">
+                                    <a href="/"><img src="{{asset('/images/logo/logo_black.png')}}" alt=""></a>
+                                </div>
                             </div>
-                        </div>
-                        <!-- End Header Logo -->
+                            <!-- End Header Logo -->
 
-                        <!-- Start Header Main Menu -->
-                        <div class="main-menu menu-color--black menu-hover-color--golden">
-                            <nav>
-                                <ul>
-                                    <li>
-                                        <a class="active main-menu-link" href="/">Home</a>
-                                    </li>
-                                    <li>
-                                        <a href="/shop">Shop</a>
-                                        <!-- Mega Menu -->
-                                    </li>
-                                    <li>
-                                        <a href="/blogs">Blogs</a>
-                                        <!-- Sub Menu -->
-                                    </li>
-                                    <li>
-                                        <a href="about">About Us</a>
-                                    </li>
-                                    <li>
-                                        <a href="contact">Contact Us</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!-- End Header Main Menu Start -->
+                            <!-- Start Header Main Menu -->
+                            <div class="main-menu menu-color--black menu-hover-color--golden">
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <a class="active main-menu-link" href="/">Home</a>
+                                        </li>
+                                        <li>
+                                            <a href="/shop">Shop</a>
+                                            <!-- Mega Menu -->
+                                        </li>
+                                        <li>
+                                            <a href="/blogs">Blogs</a>
+                                            <!-- Sub Menu -->
+                                        </li>
+                                        <li>
+                                            <a href="about">About Us</a>
+                                        </li>
+                                        <li>
+                                            <a href="contact">Contact Us</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- End Header Main Menu Start -->
 
-                        <!-- Start Header Action Link -->
-                        <ul class="header-action-link action-color--black action-hover-color--golden">
-                            <li>
-                                <a href="#offcanvas-wishlish" class="offcanvas-toggle">
-                                    <i class="icon-heart"></i>
-                                    <span class="item-count">3</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#offcanvas-add-cart" class="offcanvas-toggle">
-                                    <i class="icon-bag"></i>
-                                    <span class="item-count">3</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#search">
-                                    <i class="icon-magnifier"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#offcanvas-about" class="offacnvas offside-about offcanvas-toggle">
-                                    <i class="icon-menu"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- End Header Action Link -->
+                            <!-- Start Header Action Link -->
+                            <ul class="header-action-link action-color--black action-hover-color--golden main-menu">
+                                <li>
+                                    <a href="#offcanvas-wishlish" class="offcanvas-toggle">
+                                        <i class="icon-heart"></i>
+                                        <span class="item-count">3</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#offcanvas-add-cart" class="offcanvas-toggle">
+                                        <i class="icon-bag"></i>
+                                        <span class="item-count">3</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#search">
+                                        <i class="icon-magnifier"></i>
+                                    </a>
+                                </li>
+                                @if(Auth::user())
+                                <li class="has-dropdown mt-1">
+                                    <a href="#offcanvas-about" class="offacnvas offcanvas-toggle">
+                                        <ion-icon name="person-outline" style="font-size: 25px;color:#525252"></ion-icon>
+                                    </a>
+                                </li>
+                                @else
+                                <li>
+                                    <a href="#offcanvas-about" class="offacnvas offside-about offcanvas-toggle">
+                                        <i class="icon-menu"></i>
+                                    </a>
+                                </li>
+                                @endif
+                            </ul>
+                            <!-- End Header Action Link -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</header>
-<!-- Start Header Area -->
+    </header>
+    <!-- Start Header Area -->
 
     <!-- Start Mobile Header -->
     <div class="mobile-header mobile-header-bg-color--golden section-fluid d-lg-block d-xl-none">
@@ -317,6 +326,7 @@
         <!-- Start Offcanvas Mobile Menu Wrapper -->
         <!-- Start Mobile contact Info -->
         <div class="mobile-contact-info">
+            @if(!Auth::user())
             <div class="logo">
                 <a href="index.html"><img src="{{asset('/images/logo/logo_white.png')}}" alt=""></a>
             </div>
@@ -335,10 +345,18 @@
             </ul>
 
             <ul class="user-link">
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="wishlist.html">Sign in</a></li>
+                <li><a href="cart.html">Sign up</a></li>
             </ul>
+            @else
+            <div class="logo">
+                <a href="/account"><img style="border-radius: 50%;" src="{{asset('storage/images/avatar/'. Auth::user()->avatar)}}" alt=""></a>
+            </div>
+            <address class="address">
+                <span>Hello, {{Auth::user()->firtsname}} {{Auth::user()->lastname}}</span>
+                <a href="/account"><span>My account</span></a>
+            </address>
+            @endif
         </div>
         <!-- End Mobile contact Info -->
     </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
@@ -357,8 +375,7 @@
                 <li class="offcanvas-cart-item-single">
                     <div class="offcanvas-cart-item-block">
                         <a href="#" class="offcanvas-cart-item-image-link">
-                            <img src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt=""
-                                class="offcanvas-cart-image">
+                            <img src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt="" class="offcanvas-cart-image">
                         </a>
                         <div class="offcanvas-cart-item-content">
                             <a href="#" class="offcanvas-cart-item-link">Car Wheel</a>
@@ -375,8 +392,7 @@
                 <li class="offcanvas-cart-item-single">
                     <div class="offcanvas-cart-item-block">
                         <a href="#" class="offcanvas-cart-item-image-link">
-                            <img src="{{asset('/images/product/default/home-2/default-1.jpg')}}" alt=""
-                                class="offcanvas-cart-image">
+                            <img src="{{asset('/images/product/default/home-2/default-1.jpg')}}" alt="" class="offcanvas-cart-image">
                         </a>
                         <div class="offcanvas-cart-item-content">
                             <a href="#" class="offcanvas-cart-item-link">Car Vails</a>
@@ -393,8 +409,7 @@
                 <li class="offcanvas-cart-item-single">
                     <div class="offcanvas-cart-item-block">
                         <a href="#" class="offcanvas-cart-item-image-link">
-                            <img src="{{asset('/images/product/default/home-3/default-1.jpg')}}" alt=""
-                                class="offcanvas-cart-image">
+                            <img src="{{asset('/images/product/default/home-3/default-1.jpg')}}" alt="" class="offcanvas-cart-image">
                         </a>
                         <div class="offcanvas-cart-item-content">
                             <a href="#" class="offcanvas-cart-item-link">Shock Absorber</a>
@@ -435,8 +450,7 @@
                 <li class="offcanvas-wishlist-item-single">
                     <div class="offcanvas-wishlist-item-block">
                         <a href="#" class="offcanvas-wishlist-item-image-link">
-                            <img src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt=""
-                                class="offcanvas-wishlist-image">
+                            <img src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt="" class="offcanvas-wishlist-image">
                         </a>
                         <div class="offcanvas-wishlist-item-content">
                             <a href="#" class="offcanvas-wishlist-item-link">Car Wheel</a>
@@ -453,8 +467,7 @@
                 <li class="offcanvas-wishlist-item-single">
                     <div class="offcanvas-wishlist-item-block">
                         <a href="#" class="offcanvas-wishlist-item-image-link">
-                            <img src="{{asset('/images/product/default/home-2/default-1.jpg')}}" alt=""
-                                class="offcanvas-wishlist-image">
+                            <img src="{{asset('/images/product/default/home-2/default-1.jpg')}}" alt="" class="offcanvas-wishlist-image">
                         </a>
                         <div class="offcanvas-wishlist-item-content">
                             <a href="#" class="offcanvas-wishlist-item-link">Car Vails</a>
@@ -471,8 +484,7 @@
                 <li class="offcanvas-wishlist-item-single">
                     <div class="offcanvas-wishlist-item-block">
                         <a href="#" class="offcanvas-wishlist-item-image-link">
-                            <img src="{{asset('/images/product/default/home-3/default-1.jpg')}}" alt=""
-                                class="offcanvas-wishlist-image">
+                            <img src="{{asset('/images/product/default/home-3/default-1.jpg')}}" alt="" class="offcanvas-wishlist-image">
                         </a>
                         <div class="offcanvas-wishlist-item-content">
                             <a href="#" class="offcanvas-wishlist-item-link">Shock Absorber</a>
@@ -527,8 +539,7 @@
                                     <div class="hero-slider-content">
                                         <h4 class="subtitle">New collection</h4>
                                         <h2 class="title">Best Of NeoCon <br> Gold Award </h2>
-                                        <a href="product-details-default.html"
-                                            class="btn btn-lg btn-outline-golden">shop now </a>
+                                        <a href="product-details-default.html" class="btn btn-lg btn-outline-golden">shop now </a>
                                     </div>
                                 </div>
                             </div>
@@ -549,8 +560,7 @@
                                     <div class="hero-slider-content">
                                         <h4 class="subtitle">New collection</h4>
                                         <h2 class="title">Luxy Chairs <br> Design Award </h2>
-                                        <a href="product-details-default.html"
-                                            class="btn btn-lg btn-outline-golden">shop now </a>
+                                        <a href="product-details-default.html" class="btn btn-lg btn-outline-golden">shop now </a>
                                     </div>
                                 </div>
                             </div>
@@ -640,8 +650,7 @@
 
                     <div class="col-lg-6 col-12 mb-6">
                         <!-- Start Banner Single Item -->
-                        <div class="banner-single-item banner-style-1 banner-animation img-responsive"
-                            data-aos="fade-up" data-aos-delay="0">
+                        <div class="banner-single-item banner-style-1 banner-animation img-responsive" data-aos="fade-up" data-aos-delay="0">
                             <div class="image">
                                 <img src="{{asset('/images/banner/banner-style-1-img-1.jpg')}}" alt="">
                             </div>
@@ -649,10 +658,7 @@
                                 <h4 class="title">Mini rechargeable
                                     Table Lamp - E216</h4>
                                 <h5 class="sub-title">We design your home</h5>
-                                <a href="product-details-default.html"
-                                    class="btn btn-lg btn-outline-golden icon-space-left"><span
-                                        class="d-flex align-items-center">discover now <i
-                                            class="ion-ios-arrow-thin-right"></i></span></a>
+                                <a href="product-details-default.html" class="btn btn-lg btn-outline-golden icon-space-left"><span class="d-flex align-items-center">discover now <i class="ion-ios-arrow-thin-right"></i></span></a>
                             </div>
                         </div>
                         <!-- End Banner Single Item -->
@@ -662,8 +668,7 @@
                         <div class="row mb-n6">
                             <!-- Start Banner Single Item -->
                             <div class="col-lg-6 col-sm-6 mb-6">
-                                <div class="banner-single-item banner-style-2 banner-animation img-responsive"
-                                    data-aos="fade-up" data-aos-delay="0">
+                                <div class="banner-single-item banner-style-2 banner-animation img-responsive" data-aos="fade-up" data-aos-delay="0">
                                     <div class="image">
                                         <img src="{{asset('/images/banner/banner-style-2-img-1.jpg')}}" alt="">
                                     </div>
@@ -678,8 +683,7 @@
                             <!-- End Banner Single Item -->
                             <!-- Start Banner Single Item -->
                             <div class="col-lg-6 col-sm-6 mb-6">
-                                <div class="banner-single-item banner-style-2 banner-animation img-responsive"
-                                    data-aos="fade-up" data-aos-delay="200">
+                                <div class="banner-single-item banner-style-2 banner-animation img-responsive" data-aos="fade-up" data-aos-delay="200">
                                     <div class="image">
                                         <img src="{{asset('/images/banner/banner-style-2-img-2.jpg')}}" alt="">
                                     </div>
@@ -694,8 +698,7 @@
                             <!-- End Banner Single Item -->
                             <!-- Start Banner Single Item -->
                             <div class="col-lg-6 col-sm-6 mb-6">
-                                <div class="banner-single-item banner-style-2 banner-animation img-responsive"
-                                    data-aos="fade-up" data-aos-delay="0">
+                                <div class="banner-single-item banner-style-2 banner-animation img-responsive" data-aos="fade-up" data-aos-delay="0">
                                     <div class="image">
                                         <img src="{{asset('/images/banner/banner-style-2-img-3.jpg')}}" alt="">
                                     </div>
@@ -710,8 +713,7 @@
                             <!-- End Banner Single Item -->
                             <!-- Start Banner Single Item -->
                             <div class="col-lg-6 col-sm-6 mb-6">
-                                <div class="banner-single-item banner-style-2 banner-animation img-responsive"
-                                    data-aos="fade-up" data-aos-delay="200">
+                                <div class="banner-single-item banner-style-2 banner-animation img-responsive" data-aos="fade-up" data-aos-delay="200">
                                     <div class="image">
                                         <img src="{{asset('/images/banner/banner-style-2-img-4.jpg')}}" alt="">
                                     </div>
@@ -771,13 +773,10 @@
                                             </div>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -814,13 +813,10 @@
                                             </div>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -857,13 +853,10 @@
                                             </div>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -897,13 +890,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -937,13 +927,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -977,13 +964,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1017,13 +1001,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1057,13 +1038,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1097,13 +1075,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1140,13 +1115,10 @@
                                             </div>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1180,13 +1152,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1220,13 +1189,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1270,8 +1236,7 @@
             <div class="row">
                 <div class="col-xl-8 offset-xl-2">
                     <!-- Start Banner Single Item -->
-                    <div class="banner-single-item banner-style-3 banner-animation img-responsive" data-aos="fade-up"
-                        data-aos-delay="0">
+                    <div class="banner-single-item banner-style-3 banner-animation img-responsive" data-aos="fade-up" data-aos-delay="0">
                         <div class="image">
                             <img class="img-fluid" src="{{asset('/images/banner/banner-style-3-img-1.jpg')}}" alt="">
                         </div>
@@ -1279,10 +1244,7 @@
                             <h3 class="title">Modern Furniture
                                 Basic Collection</h3>
                             <h5 class="sub-title">We design your home more beautiful</h5>
-                            <a href="product-details-default.html"
-                                class="btn btn-lg btn-outline-golden icon-space-left"><span
-                                    class="d-flex align-items-center">discover now <i
-                                        class="ion-ios-arrow-thin-right"></i></span></a>
+                            <a href="product-details-default.html" class="btn btn-lg btn-outline-golden icon-space-left"><span class="d-flex align-items-center">discover now <i class="ion-ios-arrow-thin-right"></i></span></a>
                         </div>
                     </div>
                     <!-- End Banner Single Item -->
@@ -1329,13 +1291,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1369,13 +1328,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1409,13 +1365,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1449,13 +1402,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1492,13 +1442,10 @@
                                             </div>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1535,13 +1482,10 @@
                                             </div>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1578,13 +1522,10 @@
                                             </div>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1618,13 +1559,10 @@
                                             </a>
                                             <div class="action-link">
                                                 <div class="action-link-left">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalAddcart">Add to Cart</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                 </div>
                                                 <div class="action-link-right">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalQuickview"><i
-                                                            class="icon-magnifier"></i></a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
                                                     <a href="wishlist.html"><i class="icon-heart"></i></a>
                                                     <a href="compare.html"><i class="icon-shuffle"></i></a>
                                                 </div>
@@ -1665,8 +1603,7 @@
     <div class="banner-section">
         <div class="banner-wrapper clearfix">
             <!-- Start Banner Single Item -->
-            <div class="banner-single-item banner-style-4 banner-animation banner-color--golden float-left img-responsive"
-                data-aos="fade-up" data-aos-delay="0">
+            <div class="banner-single-item banner-style-4 banner-animation banner-color--golden float-left img-responsive" data-aos="fade-up" data-aos-delay="0">
                 <div class="image">
                     <img class="img-fluid" src="{{asset('/images/banner/banner-style-4-img-1.jpg')}}" alt="">
                 </div>
@@ -1680,8 +1617,7 @@
             </div>
             <!-- End Banner Single Item -->
             <!-- Start Banner Single Item -->
-            <div class="banner-single-item banner-style-4 banner-animation banner-color--golden float-left img-responsive"
-                data-aos="fade-up" data-aos-delay="200">
+            <div class="banner-single-item banner-style-4 banner-animation banner-color--golden float-left img-responsive" data-aos="fade-up" data-aos-delay="200">
                 <div class="image">
                     <img class="img-fluid" src="{{asset('/images/banner/banner-style-4-img-2.jpg')}}" alt="">
                 </div>
@@ -1695,8 +1631,7 @@
             </div>
             <!-- End Banner Single Item -->
             <!-- Start Banner Single Item -->
-            <div class="banner-single-item banner-style-4 banner-animation banner-color--golden float-left img-responsive"
-                data-aos="fade-up" data-aos-delay="400">
+            <div class="banner-single-item banner-style-4 banner-animation banner-color--golden float-left img-responsive" data-aos="fade-up" data-aos-delay="400">
                 <div class="image">
                     <img class="img-fluid" src="{{asset('/images/banner/banner-style-4-img-3.jpg')}}" alt="">
                 </div>
@@ -1710,8 +1645,7 @@
             </div>
             <!-- End Banner Single Item -->
             <!-- Start Banner Single Item -->
-            <div class="banner-single-item banner-style-4 banner-animation banner-color--golden float-left img-responsive"
-                data-aos="fade-up" data-aos-delay="600">
+            <div class="banner-single-item banner-style-4 banner-animation banner-color--golden float-left img-responsive" data-aos="fade-up" data-aos-delay="600">
                 <div class="image">
                     <img class="img-fluid" src="{{asset('/images/banner/banner-style-4-img-4.jpg')}}" alt="">
                 </div>
@@ -1759,8 +1693,7 @@
                                     <div class="blog-default-single-item blog-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="blog-single-sidebar-left.html" class="image-link">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/blog/blog-grid-home-1-img-1.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/blog/blog-grid-home-1-img-1.jpg')}}" alt="">
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1769,9 +1702,7 @@
                                             <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex.
                                                 Aenean posuere libero eu augue condimentum rhoncus. Praesent</p>
                                             <div class="inner">
-                                                <a href="blog-single-sidebar-left.html"
-                                                    class="read-more-btn icon-space-left">Read More <span><i
-                                                            class="ion-ios-arrow-thin-right"></i></span></a>
+                                                <a href="blog-single-sidebar-left.html" class="read-more-btn icon-space-left">Read More <span><i class="ion-ios-arrow-thin-right"></i></span></a>
                                                 <div class="post-meta">
                                                     <a href="#" class="date">24 Apr</a>
                                                 </div>
@@ -1783,8 +1714,7 @@
                                     <div class="blog-default-single-item blog-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="blog-single-sidebar-left.html" class="image-link">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/blog/blog-grid-home-1-img-2.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/blog/blog-grid-home-1-img-2.jpg')}}" alt="">
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1793,8 +1723,7 @@
                                             <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex.
                                                 Aenean posuere libero eu augue condimentum rhoncus. Praesent</p>
                                             <div class="inner">
-                                                <a href="#" class="read-more-btn icon-space-left">Read More <span><i
-                                                            class="ion-ios-arrow-thin-right"></i></span></a>
+                                                <a href="#" class="read-more-btn icon-space-left">Read More <span><i class="ion-ios-arrow-thin-right"></i></span></a>
                                                 <div class="post-meta">
                                                     <a href="blog-single-sidebar-left.html" class="date">24 Apr</a>
                                                 </div>
@@ -1806,8 +1735,7 @@
                                     <div class="blog-default-single-item blog-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="blog-single-sidebar-left.html" class="image-link">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/blog/blog-grid-home-1-img-3.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/blog/blog-grid-home-1-img-3.jpg')}}" alt="">
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1816,9 +1744,7 @@
                                             <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex.
                                                 Aenean posuere libero eu augue condimentum rhoncus. Praesent</p>
                                             <div class="inner">
-                                                <a href="blog-single-sidebar-left.html"
-                                                    class="read-more-btn icon-space-left">Read More <span><i
-                                                            class="ion-ios-arrow-thin-right"></i></span></a>
+                                                <a href="blog-single-sidebar-left.html" class="read-more-btn icon-space-left">Read More <span><i class="ion-ios-arrow-thin-right"></i></span></a>
                                                 <div class="post-meta">
                                                     <a href="#" class="date">24 Apr</a>
                                                 </div>
@@ -1830,8 +1756,7 @@
                                     <div class="blog-default-single-item blog-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="blog-single-sidebar-left.html" class="image-link">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/blog/blog-grid-home-1-img-4.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/blog/blog-grid-home-1-img-4.jpg')}}" alt="">
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1840,9 +1765,7 @@
                                             <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex.
                                                 Aenean posuere libero eu augue condimentum rhoncus. Praesent</p>
                                             <div class="inner">
-                                                <a href="blog-single-sidebar-left.html"
-                                                    class="read-more-btn icon-space-left">Read More <span><i
-                                                            class="ion-ios-arrow-thin-right"></i></span></a>
+                                                <a href="blog-single-sidebar-left.html" class="read-more-btn icon-space-left">Read More <span><i class="ion-ios-arrow-thin-right"></i></span></a>
                                                 <div class="post-meta">
                                                     <a href="#" class="date">24 Apr</a>
                                                 </div>
@@ -1854,8 +1777,7 @@
                                     <div class="blog-default-single-item blog-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="blog-single-sidebar-left.html" class="image-link">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/blog/blog-grid-home-1-img-5.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/blog/blog-grid-home-1-img-5.jpg')}}" alt="">
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1864,9 +1786,7 @@
                                             <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex.
                                                 Aenean posuere libero eu augue condimentum rhoncus. Praesent</p>
                                             <div class="inner">
-                                                <a href="blog-single-sidebar-left.html"
-                                                    class="read-more-btn icon-space-left">Read More <span><i
-                                                            class="ion-ios-arrow-thin-right"></i></span></a>
+                                                <a href="blog-single-sidebar-left.html" class="read-more-btn icon-space-left">Read More <span><i class="ion-ios-arrow-thin-right"></i></span></a>
                                                 <div class="post-meta">
                                                     <a href="#" class="date">24 Apr</a>
                                                 </div>
@@ -1878,8 +1798,7 @@
                                     <div class="blog-default-single-item blog-color--golden swiper-slide">
                                         <div class="image-box">
                                             <a href="blog-single-sidebar-left.html" class="image-link">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/blog/blog-grid-home-1-img-6.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/blog/blog-grid-home-1-img-6.jpg')}}" alt="">
                                             </a>
                                         </div>
                                         <div class="content">
@@ -1888,9 +1807,7 @@
                                             <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex.
                                                 Aenean posuere libero eu augue condimentum rhoncus. Praesent</p>
                                             <div class="inner">
-                                                <a href="blog-single-sidebar-left.html"
-                                                    class="read-more-btn icon-space-left">Read More <span><i
-                                                            class="ion-ios-arrow-thin-right"></i></span></a>
+                                                <a href="blog-single-sidebar-left.html" class="read-more-btn icon-space-left">Read More <span><i class="ion-ios-arrow-thin-right"></i></span></a>
                                                 <div class="post-meta">
                                                     <a href="#" class="date">24 Apr</a>
                                                 </div>
@@ -1919,28 +1836,15 @@
                     <div class="col-12">
                         <div class="instagram-box">
                             <div id="instagramFeed" class="instagram-grid clearfix">
-                                <a href="https://www.instagram.com/p/CCFOZKDDS6S/" target="_blank"
-                                    class="instagram-image-link float-left banner-animation"><img
-                                        src="{{asset('/images/instagram/instagram-1.jpg')}}" alt=""></a>
-                                <a href="https://www.instagram.com/p/CCFOYDNjWF5/" target="_blank"
-                                    class="instagram-image-link float-left banner-animation"><img
-                                        src="{{asset('/images/instagram/instagram-2.jpg')}}" alt=""></a>
-                                <a href="https://www.instagram.com/p/CCFOXH6D-zQ/" target="_blank"
-                                    class="instagram-image-link float-left banner-animation"><img
-                                        src="{{asset('/images/instagram/instagram-3.jpg')}}" alt=""></a>
-                                <a href="https://www.instagram.com/p/CCFOVcrDDOo/" target="_blank"
-                                    class="instagram-image-link float-left banner-animation"><img
-                                        src="{{asset('/images/instagram/instagram-4.jpg')}}" alt=""></a>
-                                <a href="https://www.instagram.com/p/CCFOUajjABP/" target="_blank"
-                                    class="instagram-image-link float-left banner-animation"><img
-                                        src="{{asset('/images/instagram/instagram-5.jpg')}}" alt=""></a>
-                                <a href="https://www.instagram.com/p/CCFOS2MDmjj/" target="_blank"
-                                    class="instagram-image-link float-left banner-animation"><img
-                                        src="{{asset('/images/instagram/instagram-6.jpg')}}" alt=""></a>
+                                <a href="https://www.instagram.com/p/CCFOZKDDS6S/" target="_blank" class="instagram-image-link float-left banner-animation"><img src="{{asset('/images/instagram/instagram-1.jpg')}}" alt=""></a>
+                                <a href="https://www.instagram.com/p/CCFOYDNjWF5/" target="_blank" class="instagram-image-link float-left banner-animation"><img src="{{asset('/images/instagram/instagram-2.jpg')}}" alt=""></a>
+                                <a href="https://www.instagram.com/p/CCFOXH6D-zQ/" target="_blank" class="instagram-image-link float-left banner-animation"><img src="{{asset('/images/instagram/instagram-3.jpg')}}" alt=""></a>
+                                <a href="https://www.instagram.com/p/CCFOVcrDDOo/" target="_blank" class="instagram-image-link float-left banner-animation"><img src="{{asset('/images/instagram/instagram-4.jpg')}}" alt=""></a>
+                                <a href="https://www.instagram.com/p/CCFOUajjABP/" target="_blank" class="instagram-image-link float-left banner-animation"><img src="{{asset('/images/instagram/instagram-5.jpg')}}" alt=""></a>
+                                <a href="https://www.instagram.com/p/CCFOS2MDmjj/" target="_blank" class="instagram-image-link float-left banner-animation"><img src="{{asset('/images/instagram/instagram-6.jpg')}}" alt=""></a>
                             </div>
                             <div class="instagram-link">
-                                <h5><a href="https://www.instagram.com/myfurniturecom/" target="_blank"
-                                        rel="noopener noreferrer">HONOTEMPLATE</a></h5>
+                                <h5><a href="https://www.instagram.com/myfurniturecom/" target="_blank" rel="noopener noreferrer">HONOTEMPLATE</a></h5>
                             </div>
                         </div>
                     </div>
@@ -1959,8 +1863,7 @@
                     <div class="row mb-n6">
                         <div class="col-lg-3 col-sm-6 mb-6">
                             <!-- Start Footer Single Item -->
-                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
-                                data-aos-delay="0">
+                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up" data-aos-delay="0">
                                 <h5 class="title">INFORMATION</h5>
                                 <ul class="footer-nav">
                                     <li><a href="#">Delivery Information</a></li>
@@ -1973,8 +1876,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6 mb-6">
                             <!-- Start Footer Single Item -->
-                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
-                                data-aos-delay="200">
+                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up" data-aos-delay="200">
                                 <h5 class="title">MY ACCOUNT</h5>
                                 <ul class="footer-nav">
                                     <li><a href="my-account.html">My account</a></li>
@@ -1988,8 +1890,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6 mb-6">
                             <!-- Start Footer Single Item -->
-                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
-                                data-aos-delay="400">
+                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up" data-aos-delay="400">
                                 <h5 class="title">CATEGORIES</h5>
                                 <ul class="footer-nav">
                                     <li><a href="#">Decorative</a></li>
@@ -2003,8 +1904,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6 mb-6">
                             <!-- Start Footer Single Item -->
-                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
-                                data-aos-delay="600">
+                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up" data-aos-delay="600">
                                 <h5 class="title">ABOUT US</h5>
                                 <div class="footer-about">
                                     <p>We are a team of designers and developers that create high quality Magento,
@@ -2059,13 +1959,10 @@
             <!-- Start Footer Bottom -->
             <div class="footer-bottom">
                 <div class="container">
-                    <div
-                        class="row justify-content-between align-items-center align-items-center flex-column flex-md-row mb-n6">
+                    <div class="row justify-content-between align-items-center align-items-center flex-column flex-md-row mb-n6">
                         <div class="col-auto mb-6">
                             <div class="footer-copyright">
-                                <p class="copyright-text">&copy; 2021 <a href="index.html">therankme</a>. Made with <i
-                                        class="fa fa-heart text-danger"></i> by <a href="https://therankme.com/"
-                                        target="_blank">therankme</a> </p>
+                                <p class="copyright-text">&copy; 2021 <a href="index.html">therankme</a>. Made with <i class="fa fa-heart text-danger"></i> by <a href="https://therankme.com/" target="_blank">therankme</a> </p>
 
                             </div>
                         </div>
@@ -2095,8 +1992,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col text-right">
-                                <button type="button" class="close modal-close" data-bs-dismiss="modal"
-                                    aria-label="Close">
+                                <button type="button" class="close modal-close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true"> <i class="fa fa-times"></i></span>
                                 </button>
                             </div>
@@ -2106,8 +2002,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="modal-add-cart-product-img">
-                                            <img class="img-fluid"
-                                                src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt="">
+                                            <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -2144,8 +2039,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col text-right">
-                                <button type="button" class="close modal-close" data-bs-dismiss="modal"
-                                    aria-label="Close">
+                                <button type="button" class="close modal-close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true"> <i class="fa fa-times"></i></span>
                                 </button>
                             </div>
@@ -2178,32 +2072,25 @@
                                     </div>
                                     <!-- End Large Image -->
                                     <!-- Start Thumbnail Image -->
-                                    <div
-                                        class="product-image-thumb modal-product-image-thumb swiper-container pos-relative mt-5">
+                                    <div class="product-image-thumb modal-product-image-thumb swiper-container pos-relative mt-5">
                                         <div class="swiper-wrapper">
                                             <div class="product-image-thumb-single swiper-slide">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/product/default/home-1/default-2.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-2.jpg')}}" alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/product/default/home-1/default-3.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-3.jpg')}}" alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/product/default/home-1/default-4.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-4.jpg')}}" alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/product/default/home-1/default-5.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-5.jpg')}}" alt="">
                                             </div>
                                             <div class="product-image-thumb-single swiper-slide">
-                                                <img class="img-fluid"
-                                                    src="{{asset('/images/product/default/home-1/default-6.jpg')}}" alt="">
+                                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-6.jpg')}}" alt="">
                                             </div>
                                         </div>
                                         <!-- Add Arrows -->
@@ -2227,35 +2114,27 @@
                                             <span>Color</span>
                                             <div class="product-variable-color">
                                                 <label for="modal-product-color-red">
-                                                    <input name="modal-product-color" id="modal-product-color-red"
-                                                        class="color-select" type="radio" checked>
+                                                    <input name="modal-product-color" id="modal-product-color-red" class="color-select" type="radio" checked>
                                                     <span class="product-color-red"></span>
                                                 </label>
                                                 <label for="modal-product-color-tomato">
-                                                    <input name="modal-product-color" id="modal-product-color-tomato"
-                                                        class="color-select" type="radio">
+                                                    <input name="modal-product-color" id="modal-product-color-tomato" class="color-select" type="radio">
                                                     <span class="product-color-tomato"></span>
                                                 </label>
                                                 <label for="modal-product-color-green">
-                                                    <input name="modal-product-color" id="modal-product-color-green"
-                                                        class="color-select" type="radio">
+                                                    <input name="modal-product-color" id="modal-product-color-green" class="color-select" type="radio">
                                                     <span class="product-color-green"></span>
                                                 </label>
                                                 <label for="modal-product-color-light-green">
-                                                    <input name="modal-product-color"
-                                                        id="modal-product-color-light-green" class="color-select"
-                                                        type="radio">
+                                                    <input name="modal-product-color" id="modal-product-color-light-green" class="color-select" type="radio">
                                                     <span class="product-color-light-green"></span>
                                                 </label>
                                                 <label for="modal-product-color-blue">
-                                                    <input name="modal-product-color" id="modal-product-color-blue"
-                                                        class="color-select" type="radio">
+                                                    <input name="modal-product-color" id="modal-product-color-blue" class="color-select" type="radio">
                                                     <span class="product-color-blue"></span>
                                                 </label>
                                                 <label for="modal-product-color-light-blue">
-                                                    <input name="modal-product-color"
-                                                        id="modal-product-color-light-blue" class="color-select"
-                                                        type="radio">
+                                                    <input name="modal-product-color" id="modal-product-color-light-blue" class="color-select" type="radio">
                                                     <span class="product-color-light-blue"></span>
                                                 </label>
                                             </div>
@@ -2325,6 +2204,8 @@
     <script src="{{asset('/js/plugins/ajax-mail.js')}}"></script> -->
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="{{asset('/js/vendor/vendor.min.js')}}"></script>
     <script src="{{asset('/js/plugins/plugins.min.js')}}"></script>
 

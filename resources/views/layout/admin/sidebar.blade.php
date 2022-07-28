@@ -61,8 +61,11 @@
                                 <a href="{{route('products.index')}}" class=""><i class="fa fa-list"></i>List products</a>
                             </li>
                             <li>
-                                <a href="" class="{{route('products.create')}}"><i class="fa fa-plus-square-o"></i>Create new product</a>
+                                <a href="{{route('products.create')}}" class=""><i class="fa fa-plus-square-o"></i>Create product</a>
                             </li>
+                            <!-- <li>
+                                <a href="" class="{{route('products.create')}}"><i class="fa fa-plus-square-o"></i>Create new product</a>
+                            </li> -->
                         </ul>
                     </li>
                     <li class="sidebar-main-title">

@@ -40,7 +40,7 @@
                         <!-- End Header Main Menu Start -->
 
                         <!-- Start Header Action Link -->
-                        <ul class="header-action-link action-color--black action-hover-color--golden">
+                        <ul class="header-action-link action-color--black action-hover-color--golden main-menu">
                             <li>
                                 <a href="#offcanvas-wishlish" class="offcanvas-toggle">
                                     <i class="icon-heart"></i>
@@ -58,11 +58,20 @@
                                     <i class="icon-magnifier"></i>
                                 </a>
                             </li>
+                            @if(!Auth::user())
+                            <!-- @dd(Auth::user()) -->
                             <li>
                                 <a href="#offcanvas-about" class="offacnvas offside-about offcanvas-toggle">
                                     <i class="icon-menu"></i>
                                 </a>
                             </li>
+                            @else
+                            <li class="has-dropdown mt-1">
+                                <a href="#offcanvas-about" class="offacnvas offcanvas-toggle">
+                                    <ion-icon name="person-outline" style="font-size: 25px;color:#525252"></ion-icon>
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                         <!-- End Header Action Link -->
                     </div>
@@ -82,7 +91,7 @@
                 <div class="mobile-header-left">
                     <ul class="mobile-menu-logo">
                         <li>
-                            <a href="/">
+                            <a href="index.html">
                                 <div class="logo">
                                     <img src="{{asset('/images/logo/logo_black.png')}}" alt="">
                                 </div>
@@ -277,6 +286,7 @@
     <!-- Start Offcanvas Mobile Menu Wrapper -->
     <!-- Start Mobile contact Info -->
     <div class="mobile-contact-info">
+        @if(!Auth::user())
         <div class="logo">
             <a href="index.html"><img src="{{asset('/images/logo/logo_white.png')}}" alt=""></a>
         </div>
@@ -298,7 +308,18 @@
             <li><a href="wishlist.html">Wishlist</a></li>
             <li><a href="cart.html">Cart</a></li>
             <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
         </ul>
+        @else
+        <div class="logo">
+            <a href="/account"><img style="border-radius: 50%;" src="{{asset('storage/images/avatar/'. Auth::user()->avatar)}}" alt=""></a>
+        </div>
+        <address class="address">
+            <span>Hello, {{Auth::user()->firtsname}} {{Auth::user()->lastname}}</span>
+            <a href="/account"><span>My account</span></a>
+            <a href="">Log out <ion-icon name="log-out-outline" class="mt-1"></ion-icon></a>
+        </address>
+        @endif
     </div>
     <!-- End Mobile contact Info -->
 </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
@@ -460,7 +481,6 @@
 
 <!-- Offcanvas Overlay -->
 <div class="offcanvas-overlay"></div>
-
 <!-- ...:::: Start Breadcrumb Section:::... -->
 <div class="breadcrumb-section breadcrumb-bg-color--golden">
     <div class="breadcrumb-wrapper">

@@ -18,7 +18,8 @@
                             @method('PUT')
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Name category</label>
-                                <input value="{{$category->name}}" name="name" class="form-control" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="Enter name category">
+                                <input value="{{$category->name}}"  name="name" class="form-control <?php echo ($errors->first('name') ? 'is-invalid' : ' ') ?>" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="Enter name category">
+                                <div class="invalid-feedback">{{$errors->first('name')}}</div>
                             </div>
                             <fieldset class="mb-3">
                                 <div class="row">

@@ -1,24 +1,26 @@
 @extends('layout.client.main')
-@section('title-page','Login')
-@section('title','Login')
-@section('title','Login')
+@section('title-page','Sign in')
+@section('title','Sign in')
+@section('title','Sign in')
 @section('content')
 <!-- ...:::: Start Customer Login Section :::... -->
 <div class="customer-login">
     <div class="container">
         <div class="row">
+            <div class="col-lg-3"></div>
             <!--login area start-->
             <div class="col-lg-6 col-md-6">
                 <div class="account_form" data-aos="fade-up" data-aos-delay="0">
                     <h3>login</h3>
-                    <form action="#" method="POST">
+                    <form action="{{route('users.login')}}" method="POST">
+                        @csrf
                         <div class="default-form-box">
-                            <label>Username or email <span>*</span></label>
-                            <input type="text">
+                            <label>Email <span>*</span></label>
+                            <input type="text" name="email">
                         </div>
                         <div class="default-form-box">
                             <label>Passwords <span>*</span></label>
-                            <input type="password">
+                            <input type="password" name="password">
                         </div>
                         <div class="login_submit">
                             <button class="btn btn-md btn-black-default-hover mb-4" type="submit">login</button>
@@ -26,19 +28,25 @@
                                 <input type="checkbox" id="offer">
                                 <span>Remember me</span>
                             </label>
-                            <a href="#">Lost your password?</a>
-
+                            <div style="display: flex;justify-content:space-between">
+                                <div>
+                                    <a href="#">Lost your password?</a>
+                                </div>
+                                <div>
+                                    <a href="{{route('users.create')}}">Don't have account? Sign up now</a>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
             <!--login area start-->
-
+            <div class="col-lg-3"></div>
             <!--register area start-->
-            <div class="col-lg-6 col-md-6">
+            <!-- <div class="col-lg-6 col-md-6">
                 <div class="account_form register" data-aos="fade-up" data-aos-delay="200">
                     <h3>Register</h3>
-                    <form action="#">
+                    <form action="{{route('users.create')}}" method="POST">
                         <div class="default-form-box">
                             <label>Email address <span>*</span></label>
                             <input type="text">
@@ -52,7 +60,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
             <!--register area end-->
         </div>
     </div>

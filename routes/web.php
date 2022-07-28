@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,13 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/')->group(function () {
     Route::get('/', function () {
         return view('client.index');
-    });
+    })->name('client.index');
     Route::get('/shop', function () {
         return view('client.shop');
     });
-    Route::get('/shop/{product}', function () {
-        return view('client.product');
-    });
+    Route::get('/products/{id}', [ProductController::class, 'show']);
     Route::get('/cart', function () {
         return view('client.cart');
     });
@@ -37,9 +38,6 @@ Route::prefix('/')->group(function () {
     });
     Route::get('/checkout', function () {
         return view('client.checkout');
-    });
-    Route::get('/login', function () {
-        return view('client.login');
     });
     Route::get('/account', function () {
         return view('client.account');
@@ -57,6 +55,8 @@ Route::prefix('/')->group(function () {
         return view('client.contact');
     });
 });
+Route::post('users/login', [UserController::class, 'checkLogin'])->name('users.login')->middleware('auth');
+Route::resource('users', UserController::class);
 
 // Admin client
 Route::prefix('/admin')->group(function () {
@@ -64,7 +64,7 @@ Route::prefix('/admin')->group(function () {
         return view('admin.index');
     });
 
-    Route::resource('categories', CategoriesController::class);
+    Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
 
     // Route::resources([

@@ -42,6 +42,8 @@
     @include('layout.client.header')
     @yield('content')
     @include('layout.client.footer')
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="{{asset('/js/vendor/vendor.min.js')}}"></script>
     <script src="{{asset('/js/plugins/plugins.min.js')}}"></script>
 

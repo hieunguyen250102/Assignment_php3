@@ -17,12 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
-            $table->float('price');
-            $table->float('sale_price')->nullable();
+            $table->decimal('price');
+            $table->text('tag');
+            $table->decimal('sale_price')->nullable();
             $table->text('description');
             $table->string('image_list');
             $table->tinyInteger('status');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('SET NULL');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

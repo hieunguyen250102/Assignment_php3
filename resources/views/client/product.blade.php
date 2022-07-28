@@ -12,23 +12,13 @@
                     <div class="product-large-image product-large-image-horaizontal swiper-container">
                         <div class="swiper-wrapper">
                             <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                <img src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt="">
+                                <img src="{{asset('storage/images/product/'.$product->image)}}" alt="">
                             </div>
+                            @foreach ($product->image_list as $productImage)
                             <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                <img src="{{asset('/images/product/default/home-1/default-2.jpg')}}" alt="">
+                                <img src="{{asset('files/'.$productImage)}}" alt="">
                             </div>
-                            <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                <img src="{{asset('/images/product/default/home-1/default-3.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                <img src="{{asset('/images/product/default/home-1/default-4.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                <img src="{{asset('/images/product/default/home-1/default-5.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                <img src="{{asset('/images/product/default/home-1/default-6.jpg')}}" alt="">
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <!-- End Large Image -->
@@ -36,23 +26,13 @@
                     <div class="product-image-thumb product-image-thumb-horizontal swiper-container pos-relative mt-5">
                         <div class="swiper-wrapper">
                             <div class="product-image-thumb-single swiper-slide">
-                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-1.jpg')}}" alt="">
+                                <img class="img-fluid" src="{{asset('storage/images/product/'.$product->image)}}" alt="">
                             </div>
+                            @foreach ($product->image_list as $productImage)
                             <div class="product-image-thumb-single swiper-slide">
-                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-2.jpg')}}" alt="">
+                                <img class="img-fluid" src="{{asset('files/'.$productImage)}}" alt="">
                             </div>
-                            <div class="product-image-thumb-single swiper-slide">
-                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-3.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-thumb-single swiper-slide">
-                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-4.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-thumb-single swiper-slide">
-                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-5.jpg')}}" alt="">
-                            </div>
-                            <div class="product-image-thumb-single swiper-slide">
-                                <img class="img-fluid" src="{{asset('/images/product/default/home-1/default-6.jpg')}}" alt="">
-                            </div>
+                            @endforeach
                         </div>
                         <!-- Add Arrows -->
                         <div class="gallery-thumb-arrow swiper-button-next"></div>
@@ -65,7 +45,7 @@
                 <div class="product-details-content-area product-details--golden" data-aos="fade-up" data-aos-delay="200">
                     <!-- Start  Product Details Text Area-->
                     <div class="product-details-text">
-                        <h4 class="title">Ornare sed consequat</h4>
+                        <h4 class="title">{{$product->name}}</h4>
                         <div class="d-flex align-items-center">
                             <ul class="review-star">
                                 <li class="fill"><i class="ion-android-star"></i></li>
@@ -76,11 +56,14 @@
                             </ul>
                             <a href="#" class="customer-review ml-2">(customer review )</a>
                         </div>
-                        <div class="price">$80.00</div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est
-                            tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis
-                            justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id
-                            nulla.</p>
+                        <div class="price">
+                            @if($product->sale_price)
+                            <del>${{$product->price}}</del> ${{$product->sale_price}}
+                            @else
+                            ${{$product->price}}
+                            @endif
+                        </div>
+                        <p>{{$product->summary}}</p>
                     </div> <!-- End  Product Details Text Area-->
                     <!-- Start Product Variable Area -->
                     <div class="product-details-variable">
@@ -112,11 +95,11 @@
 
                     <!-- Start  Product Details Catagories Area-->
                     <div class="product-details-catagory mb-2">
-                        <span class="title">CATEGORIES:</span>
+                        <span class="title">TAG:</span>
                         <ul>
-                            <li><a href="#">BAR STOOL</a></li>
-                            <li><a href="#">KITCHEN UTENSILS</a></li>
-                            <li><a href="#">TENNIS</a></li>
+                            @foreach ($product->tag as $productTag)
+                            <li><a href="{{'/tag/'. str_slug($productTag)}}">{{$productTag}}</a></li>
+                            @endforeach
                         </ul>
                     </div> <!-- End  Product Details Catagories Area-->
                     <!-- Start  Product Details Social Area-->
@@ -162,18 +145,7 @@
                             <!-- Start Product Details Tab Content Singel -->
                             <div class="tab-pane active show" id="description">
                                 <div class="single-tab-content-item">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue
-                                        nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi
-                                        ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate
-                                        adipiscing cursus eu, suscipit id nulla. </p>
-                                    <p>Pellentesque aliquet, sem eget laoreet ultrices, ipsum metus feugiat sem,
-                                        quis fermentum turpis eros eget velit. Donec ac tempus ante. Fusce ultricies
-                                        massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero
-                                        hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus
-                                        nisi posuere nisl, in accumsan elit odio quis mi. Cras neque metus,
-                                        consequat et blandit et, luctus a nunc. Etiam gravida vehicula tellus, in
-                                        imperdiet ligula euismod eget</p>
+                                    <p>{{$product->description}}</p>
                                 </div>
                             </div> <!-- End Product Details Tab Content Singel -->
                             <!-- Start Product Details Tab Content Singel -->

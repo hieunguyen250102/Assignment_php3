@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('image');
             $table->text('content');
+            $table->text('tag');
             $table->text('summary');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->tinyInteger('status');
             $table->timestamps();
         });
