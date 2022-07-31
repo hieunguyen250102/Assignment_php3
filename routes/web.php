@@ -55,14 +55,17 @@ Route::prefix('/')->group(function () {
         return view('client.contact');
     });
 });
-Route::post('users/login', [UserController::class, 'checkLogin'])->name('users.login')->middleware('auth');
+
+Route::post('users/login', [UserController::class, 'checkLogin'])->name('users.login');
+Route::get('users/logout', [UserController::class, 'logout'])->name('users.logout');
+
 Route::resource('users', UserController::class);
 
 // Admin client
 Route::prefix('/admin')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
-    });
+    })->name('admin.index');
 
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);

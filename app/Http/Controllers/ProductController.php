@@ -91,10 +91,10 @@ class ProductController extends Controller
             $product->image_list = $splitImage;
             $splitTag = explode(",", $product->tag);
             $product->tag = $splitTag;
-            $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
-            $product->summary = str_replace("</p>", "", $product->summary);
-            $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
-            $product->description = str_replace("</p>", "", $product->description);
+            // $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
+            // $product->summary = str_replace("</p>", "", $product->summary);
+            // $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
+            // $product->description = str_replace("</p>", "", $product->description);
             return view('client.product', ['product' => $product]);
         } else {
             return view('errors.404');

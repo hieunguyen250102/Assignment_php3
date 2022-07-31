@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,9 +37,20 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $data = $request->all();
+        $flash = $request->flash([
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'firtsname' => $request->firtsname,
+            'lastname' => $request->lastname,
+            'avatar' => $request->avatar,
+            'address' => $request->address,
+            'birthday' => $request->birthday,
+            'password' => $request->password,
+        ]);
+        // dd($flash);
         $data['code'] = 'PH' . rand(1, 99999);
         $data['status'] = 0;
         $data['role'] = 1;
@@ -112,5 +124,13 @@ class UserController extends Controller
                 return redirect()->route('client.index');
             }
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('users.index');
     }
 }

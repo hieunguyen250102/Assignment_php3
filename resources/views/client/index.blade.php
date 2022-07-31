@@ -100,15 +100,15 @@
                                     </a>
                                 </li>
                                 @if(Auth::user())
-                                <li class="has-dropdown mt-1">
+                                <li class="has-dropdown">
                                     <a href="#offcanvas-about" class="offacnvas offcanvas-toggle">
-                                        <ion-icon name="person-outline" style="font-size: 25px;color:#525252"></ion-icon>
+                                        <img style="border-radius: 50%;" width="30px" src="{{asset('storage/images/avatar/'. Auth::user()->avatar)}}" alt="">
                                     </a>
                                 </li>
                                 @else
                                 <li>
-                                    <a href="#offcanvas-about" class="offacnvas offside-about offcanvas-toggle">
-                                        <i class="icon-menu"></i>
+                                    <a href="#offcanvas-about" class="offcanvas-toggle">
+                                        <ion-icon name="person-outline" style="font-size: 25px;color:#525252"></ion-icon>
                                     </a>
                                 </li>
                                 @endif
@@ -345,16 +345,19 @@
             </ul>
 
             <ul class="user-link">
-                <li><a href="wishlist.html">Sign in</a></li>
-                <li><a href="cart.html">Sign up</a></li>
+                <li><a href="{{route('users.index')}}">Sign in</a></li>
+                <li><a href="{{route('users.create')}}">Sign up</a></li>
             </ul>
             @else
             <div class="logo">
-                <a href="/account"><img style="border-radius: 50%;" src="{{asset('storage/images/avatar/'. Auth::user()->avatar)}}" alt=""></a>
+                <a href="/">
+                    <img style="border-radius: 50%;" src="{{asset('storage/images/avatar/'. Auth::user()->avatar)}}" alt=""></a>
+
             </div>
             <address class="address">
                 <span>Hello, {{Auth::user()->firtsname}} {{Auth::user()->lastname}}</span>
                 <a href="/account"><span>My account</span></a>
+                <a href="{{route('users.logout')}}">Logout</a>
             </address>
             @endif
         </div>

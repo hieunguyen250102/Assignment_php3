@@ -11,7 +11,7 @@
             <!--login area start-->
             <div class="col-lg-6 col-md-6">
                 <div class="account_form" data-aos="fade-up" data-aos-delay="0">
-                    <h3>login</h3>
+                    <h3>Login</h3>
                     <form action="{{route('users.login')}}" method="POST">
                         @csrf
                         <div class="default-form-box">

@@ -63,7 +63,7 @@
                             ${{$product->price}}
                             @endif
                         </div>
-                        <p>{{$product->summary}}</p>
+                        <p>{{!!$product->summary!!}}</p>
                     </div> <!-- End  Product Details Text Area-->
                     <!-- Start Product Variable Area -->
                     <div class="product-details-variable">
@@ -145,7 +145,7 @@
                             <!-- Start Product Details Tab Content Singel -->
                             <div class="tab-pane active show" id="description">
                                 <div class="single-tab-content-item">
-                                    <p>{{$product->description}}</p>
+                                    <p>{{!!$product->description!!}}</p>
                                 </div>
                             </div> <!-- End Product Details Tab Content Singel -->
                             <!-- Start Product Details Tab Content Singel -->

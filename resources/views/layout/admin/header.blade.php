@@ -153,9 +153,9 @@
                             </ul>
                         </li>
                         <li class="onhover-dropdown p-0">
-                            <button class="btn btn-primary-light" type="button">
+                            <a href="/logout" class="btn btn-primary-light" type="button">
                                 <i data-feather="log-out"></i>Log out
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </div>

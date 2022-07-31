@@ -58,11 +58,11 @@
                                     <i class="icon-magnifier"></i>
                                 </a>
                             </li>
-                            @if(!Auth::user())
+                            @if(Auth::user())
                             <!-- @dd(Auth::user()) -->
                             <li>
-                                <a href="#offcanvas-about" class="offacnvas offside-about offcanvas-toggle">
-                                    <i class="icon-menu"></i>
+                                <a href="#offcanvas-about" class="offacnvas offcanvas-toggle">
+                                    <img style="border-radius: 50%;" width="30px" src="{{asset('storage/images/avatar/'. Auth::user()->avatar)}}" alt="">
                                 </a>
                             </li>
                             @else
@@ -305,10 +305,8 @@
         </ul>
 
         <ul class="user-link">
-            <li><a href="wishlist.html">Wishlist</a></li>
-            <li><a href="cart.html">Cart</a></li>
-            <li><a href="checkout.html">Checkout</a></li>
-            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="{{route('users.index')}}">Sign in</a></li>
+            <li><a href="{{route('users.create')}}">Sign up</a></li>
         </ul>
         @else
         <div class="logo">
@@ -317,7 +315,7 @@
         <address class="address">
             <span>Hello, {{Auth::user()->firtsname}} {{Auth::user()->lastname}}</span>
             <a href="/account"><span>My account</span></a>
-            <a href="">Log out <ion-icon name="log-out-outline" class="mt-1"></ion-icon></a>
+            <a href="{{route('users.logout')}}">Log out</a>
         </address>
         @endif
     </div>
