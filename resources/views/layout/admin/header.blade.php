@@ -153,7 +153,7 @@
                             </ul>
                         </li>
                         <li class="onhover-dropdown p-0">
-                            <a href="/logout" class="btn btn-primary-light" type="button">
+                            <a href="{{route('users.logout')}}" class="btn btn-primary-light" type="button">
                                 <i data-feather="log-out"></i>Log out
                             </a>
                         </li>

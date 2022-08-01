@@ -16,11 +16,11 @@
                         @csrf
                         <div class="default-form-box">
                             <label>Email <span>*</span></label>
-                            <input type="text" name="email">
+                            <input type="text" name="email" placeholder="{{$errors->first('email')}}" style=" border:1px solid <?php echo ($errors->first('email') ? 'red' : '#ededed') ?>">
                         </div>
-                        <div class="default-form-box">
+                        <div class=" default-form-box">
                             <label>Passwords <span>*</span></label>
-                            <input type="password" name="password">
+                            <input type="password" name="password" placeholder="{{$errors->first('password')}}"  style="border:1px solid <?php echo ($errors->first('password') ? 'red' : '#ededed') ?>">
                         </div>
                         <div class="login_submit">
                             <button class="btn btn-md btn-black-default-hover mb-4" type="submit">login</button>

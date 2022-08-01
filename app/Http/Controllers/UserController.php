@@ -110,7 +110,7 @@ class UserController extends Controller
         //
     }
 
-    public function checkLogin(Request $request)
+    public function checkLogin(UserRequest $request)
     {
         $email = $request->email;
         $password = $request->password;
