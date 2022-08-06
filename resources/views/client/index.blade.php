@@ -62,7 +62,7 @@
                                             <a class="active main-menu-link" href="/">Home</a>
                                         </li>
                                         <li>
-                                            <a href="/shop">Shop</a>
+                                            <a href="{{route('shop.index')}}">Shop</a>
                                             <!-- Mega Menu -->
                                         </li>
                                         <li>
@@ -345,17 +345,20 @@
             </ul>
 
             <ul class="user-link">
-                <li><a href="{{route('users.index')}}">Sign in</a></li>
+                <li><a href="{{route('users.login')}}">Sign in</a></li>
                 <li><a href="{{route('users.create')}}">Sign up</a></li>
             </ul>
             @else
             <div class="logo">
                 <a href="/">
-                    <img style="border-radius: 50%;" src="{{asset('storage/images/avatar/'. Auth::user()->avatar)}}" alt=""></a>
-
+                    <img style="border-radius: 50%;" src="{{asset('storage/images/avatar/'. Auth::user()->avatar)}}" alt="">
+                </a>
             </div>
             <address class="address">
                 <span>Hello, {{Auth::user()->firtsname}} {{Auth::user()->lastname}}</span>
+                @if(Auth::user()->role === 0)
+                <a href="{{route('admin.index')}}">Dashboard Admin</a>
+                @endif
                 <a href="/account"><span>My account</span></a>
                 <a href="{{route('users.logout')}}">Logout</a>
             </address>

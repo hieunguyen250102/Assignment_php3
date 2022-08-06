@@ -105,18 +105,31 @@
                             {!! csrf_field() !!}
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Name product</label>
-                                <input name="name" class="form-control <?php echo ($errors->first('name') ? 'is-invalid' : ' ') ?>" id="exampleInputEmail1" type="text" placeholder="Enter name product">
+                                <input name="name" class="form-control <?php echo ($errors->first('name') ? 'is-invalid' : ' ') ?>" id="exampleInputEmail1" type="text" placeholder="Enter name product" value="{{old('name')}}">
                                 <div class="invalid-feedback">{{$errors->first('name')}}</div>
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Image product</label>
-                                <input name="image" class="form-control <?php echo ($errors->first('image') ? 'is-invalid' : ' ') ?>" type="file">
+                                <input name="image" onchange="loadFile(event)" class="form-control <?php echo ($errors->first('image') ? 'is-invalid' : ' ') ?>" type="file">
                                 <div class="invalid-feedback">{{$errors->first('image')}}</div>
+                                <img width="100px" src="" alt="" id="output">
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Gallery product</label>
-                                <input name="image_list[]" class="form-control <?php echo ($errors->first('image_list') ? 'is-invalid' : ' ') ?>" type="file" multiple>
+                                <input name="image_list[]" class="form-control <?php echo ($errors->first('image_list') ? 'is-invalid' : ' ') ?>" type="file" multiple id="gallery-photo-add">
                                 <div class="invalid-feedback">{{$errors->first('image_list')}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row my-gallery gallery" id="aniimated-thumbnials" itemscope="" data-pswp-uid="1">
+                                                <figure class="col-md-3 img-hover hover-1 gallery" itemprop="associatedMedia" itemscope="">
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Price product</label>
@@ -125,7 +138,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Sale price product</label>
-                                <input name="sale_price" class="form-control <?php echo ($errors->first('sale_price') ? 'is-invalid' : ' ') ?>" type="number">
+                                <input name="sale_price" class="form-control <?php echo ($errors->first('sale_price') ? 'is-invalid' : ' ') ?>" type="number" value="{{old('sale_price')}}">
                                 <div class="invalid-feedback">{{$errors->first('sale_price')}}</div>
                             </div>
                             <div class="mb-3">
@@ -146,7 +159,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Summary product</label>
-                                <textarea name="summary" class="form-control <?php echo ($errors->first('summary') ? 'is-invalid' : ' ') ?>" id="summary"></textarea>
+                                <textarea name="summary" class="form-control <?php echo ($errors->first('summary') ? 'is-invalid' : ' ') ?>" id="summary" value="{{old('summary')}}"></textarea>
                                 <script>
                                     CKEDITOR.replace('summary');
                                 </script>
@@ -197,7 +210,9 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
+    // Tag
     $(document).ready(function() {
         $(window).keydown(function(event) {
             if (event.keyCode == 13) {
@@ -273,6 +288,46 @@
         tags.length = 0;
         ul.querySelectorAll("li").forEach(li => li.remove());
         countTags();
+    });
+
+    // Preview Images
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+
+    $(function() {
+        // Multiple images preview in browser
+        var imagesPreview = function(input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        var figure = $($.parseHTML('<figure>')).attr({
+                            'class': "col-md-3 img-hover hover-1 gallery"
+                        }).appendTo(placeToInsertImagePreview);
+
+                        $($.parseHTML('<img>')).attr({
+                            'src': event.target.result,
+                            'class': "img-thumbnail"
+                        }).appendTo(figure);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+
+        };
+
+        $('#gallery-photo-add').on('change', function() {
+            imagesPreview(this, 'div.gallery');
+        });
     });
 </script>
 @endsection

@@ -36,16 +36,20 @@
                             <tr>
                                 <td>
                                     <div class="checkbox checkbox-dark">
-                                        <input id="solid{{$category->id}}" type="checkbox" >
+                                        <input id="solid{{$category->id}}" type="checkbox">
                                         <label for="solid{{$category->id}}"></label>
                                     </div>
                                 </td>
                                 <th scope="row">{{$category->id}}</th>
                                 <td>{{$category->name}}</td>
                                 @if($category->status == 0)
-                                <td><button class="btn btn-secondary"><i class="fa fa-eye"></i></button></td>
+                                <td>
+                                    <a href="{{route('admin.updateStatusCategory',['id'=>$category->id,'status'=>1])}}" class="btn btn-info"><i class="fa-solid fa-eye-slash"></i></a>
+                                </td>
                                 @else
-                                <td><button class="btn btn-secondary"><i class="fa fa-eye-slash"></i></button></td>
+                                <td>
+                                    <a href="{{route('admin.updateStatusCategory',['id'=>$category->id,'status'=>0])}}" class="btn btn-light"><i class="fa-solid fa-eye"></i></a>
+                                </td>
                                 @endif
                                 <td>
                                     <a href="{{route('categories.edit',['category' => $category->id])}}">

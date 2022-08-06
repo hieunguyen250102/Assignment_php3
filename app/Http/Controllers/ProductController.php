@@ -41,17 +41,17 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        // $validated = $request->validate([
-        //     'name' => 'required|unique:product',
-        //     'image' => 'required',
-        //     'image_list' => 'required',
-        //     'description' => 'required',
-        //     'summary' => 'required',
-        //     'price' => 'required|alpha_num',
-        //     'sale_price' => 'alpha_num',
-        //     'tag' => 'required',
-        //     'status' => 'required',
-        //     'category_id' => 'required',
+        // $flash = $request->flash([
+        //     'name' => $request->name,
+        //     'image' => $request->image,
+        //     'image_list' => $request->image_list,
+        //     'description' => $request->description,
+        //     'summary' => $request->summary,
+        //     'price' => $request->price,
+        //     'sale_price' => $request->sale_price,
+        //     'tag' => $request->tag,
+        //     'status' => $request->status,
+        //     'category_id' => $request->category_id,
         // ]);
         $data = $request->all();
         // dd($data);
@@ -67,7 +67,7 @@ class ProductController extends Controller
         if ($request->hasFile('image_list')) {
             foreach ($request->file('image_list') as $file) {
                 $name = time() . rand(1, 100) . '.' . $file->extension();
-                $file->move(public_path('files'), $name);
+                $file->move(public_path('images/product'), $name);
                 $files[] = $name;
             }
         }
@@ -91,10 +91,10 @@ class ProductController extends Controller
             $product->image_list = $splitImage;
             $splitTag = explode(",", $product->tag);
             $product->tag = $splitTag;
-            // $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
-            // $product->summary = str_replace("</p>", "", $product->summary);
-            // $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
-            // $product->description = str_replace("</p>", "", $product->description);
+            $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
+            $product->summary = str_replace("</p>", "", $product->summary);
+            $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
+            $product->description = str_replace("</p>", "", $product->description);
             return view('client.product', ['product' => $product]);
         } else {
             return view('errors.404');
@@ -141,9 +141,27 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('alert', 'Delete successfully!!');
     }
 
-    public function tag(Request  $request)
+    public function tag(Request $request)
     {
         $products = Product::where('status', 0)->where('name', 'LIKE', '%' . $request->tag . '%')
-        ->orWhere('tag', 'LIKE', '%' . $request->tag . '%');
+            ->orWhere('tag', 'LIKE', '%' . $request->tag . '%')->paginate(12);
+        foreach ($products as $product) {
+            $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
+            $product->summary = str_replace("</p>", "", $product->summary);
+            $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
+            $product->description = str_replace("</p>", "", $product->description);
+        }
+        return view('client.tag', [
+            'products' => $products
+        ]);
+    }
+
+    public function updateStatusProduct(Product $Product, Request $request)
+    {
+        // dd($request->status);
+        $Product = Product::find($request->id);
+        $Product->fill($request->all());
+        $Product->save();
+        return redirect()->route('products.index')->with('alert', 'Update status successfully!!');
     }
 }

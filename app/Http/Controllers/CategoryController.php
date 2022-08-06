@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -93,7 +95,19 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+        $products = Product::where('id', '=', $category->id)->get();
+        $productIds = $products->pluck('id');
+        Product::whereIn('id', $productIds)->update(['category_id' => 0]);
         $category->delete();
         return redirect()->route('categories.index')->with('alert', 'Delete successfully!!');
+    }
+    
+    public function updateStatusCategory(Category $category, Request $request)
+    {
+        // dd($request->status);
+        $category = Category::find($request->id);
+        $category->fill($request->all());
+        $category->save();
+        return redirect()->route('categories.index')->with('alert', 'Update status successfully!!');
     }
 }

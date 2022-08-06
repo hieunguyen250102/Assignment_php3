@@ -24,13 +24,13 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:product',
+            'name' => 'required|unique:products',
             'image' => 'required',
             'image_list' => 'required',
             'description' => 'required',
             'summary' => 'required',
-            'price' => 'required|alpha_num',
-            'sale_price' => 'alpha_num',
+            'price' => 'required|numeric',
+            'sale_price' => 'numeric',
             'tag' => 'required',
             'status' => 'required',
             'category_id' => 'required',

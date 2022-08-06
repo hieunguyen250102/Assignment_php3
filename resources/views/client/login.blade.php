@@ -4,6 +4,7 @@
 @section('title','Sign in')
 @section('content')
 <!-- ...:::: Start Customer Login Section :::... -->
+
 <div class="customer-login">
     <div class="container">
         <div class="row">
@@ -12,15 +13,20 @@
             <div class="col-lg-6 col-md-6">
                 <div class="account_form" data-aos="fade-up" data-aos-delay="0">
                     <h3>Login</h3>
+                    @if(Session::has('error'))
+                    <div class="alert alert-primary w-50 ml-30">
+                        <p class="font-light">{{Session::get('error')}}</p>
+                    </div>
+                    @endif
                     <form action="{{route('users.login')}}" method="POST">
                         @csrf
                         <div class="default-form-box">
                             <label>Email <span>*</span></label>
-                            <input type="text" name="email" placeholder="{{$errors->first('email')}}" style=" border:1px solid <?php echo ($errors->first('email') ? 'red' : '#ededed') ?>">
+                            <input type="text" name="email" placeholder="{{$errors->first('email')}}" style=" border:1px solid <?php echo ($errors->first('email') ? 'red' : '#ededed') ?>" value="{{old('email')}}">
                         </div>
                         <div class=" default-form-box">
                             <label>Passwords <span>*</span></label>
-                            <input type="password" name="password" placeholder="{{$errors->first('password')}}"  style="border:1px solid <?php echo ($errors->first('password') ? 'red' : '#ededed') ?>">
+                            <input type="password" name="password" placeholder="{{$errors->first('password')}}" style="border:1px solid <?php echo ($errors->first('password') ? 'red' : '#ededed') ?>" value="{{old('password')}}">
                         </div>
                         <div class="login_submit">
                             <button class="btn btn-md btn-black-default-hover mb-4" type="submit">login</button>

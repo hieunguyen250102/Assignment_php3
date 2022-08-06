@@ -27,6 +27,7 @@
                                 </th>
                                 <th scope="col">#</th>
                                 <th scope="col">Name product</th>
+                                <th scope="col">Image</th>
                                 <th scope="col">Status</th>
                                 <th scope="col" colspan="2">Options</th>
                             </tr>
@@ -42,10 +43,17 @@
                                 </td>
                                 <th scope="row">{{$product->id}}</th>
                                 <td>{{$product->name}}</td>
+                                <td>
+                                    <img width="100px" src="{{asset('storage/images/product/' . $product->image)}}" alt="">
+                                </td>
                                 @if($product->status == 0)
-                                <td><button class="btn btn-secondary"><i class="fa fa-eye"></i></button></td>
+                                <td>
+                                    <a href="{{route('admin.updateStatusProduct',['id'=>$product->id,'status'=>1])}}" class="btn btn-info"><i class="fa-solid fa-eye-slash"></i></a>
+                                </td>
                                 @else
-                                <td><button class="btn btn-secondary"><i class="fa fa-eye-slash"></i></button></td>
+                                <td>
+                                    <a href="{{route('admin.updateStatusProduct',['id'=>$product->id,'status'=>0])}}" class="btn btn-light"><i class="fa-solid fa-eye"></i></a>
+                                </td>
                                 @endif
                                 <td>
                                     <a href="{{route('products.edit',['product' => $product->id])}}">

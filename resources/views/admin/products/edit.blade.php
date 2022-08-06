@@ -104,12 +104,12 @@
                             {!! csrf_field() !!}
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Name product</label>
-                                <input value="{{$product->name}}" name="name" class="form-control <?php echo ($errors->first('name') ? 'is-invalid' : ' ') ?>" id="exampleInputEmail1" type="text" placeholder="Enter name product">
+                                <input value="{{$product->name}}" name="name" class="form-control <?php echo ($errors->first('name') ? 'is-invalid' : ' ') ?>" id="exampleInputEmail1" type="text" placeholder="Enter name product" value="{{old('name')}}">
                                 <div class="invalid-feedback">{{$errors->first('name')}}</div>
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Image product</label>
-                                <input name="image" class="form-control <?php echo ($errors->first('image') ? 'is-invalid' : ' ') ?>" type="file">
+                                <input name="image" class="form-control <?php echo ($errors->first('image') ? 'is-invalid' : ' ') ?>" type="file" >
                                 <div class="invalid-feedback">{{$errors->first('image')}}</div>
                                 <div class="mb-3 mt-3">
                                     <img width="100px" src="{{asset('storage/images/product/'.$product->image)}}" alt="">
@@ -121,54 +121,11 @@
                                 <div class="invalid-feedback">{{$errors->first('image_list')}}</div>
                             </div>
                             <div class="gallery my-gallery card-body row" itemscope="" data-pswp-uid="1">
+                                @foreach ($product->image_list as $img)
                                 <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/01.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/01.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 1</figcaption>
+                                    <a href="{{asset('storage/images/product/'. $img)}}" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="{{asset('storage/images/product/'. $img)}}" itemprop="thumbnail" alt="Image description"></a>
                                 </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/02.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/02.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 2</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/03.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/03.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 3</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/04.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/04.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 4</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/05.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/05.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 5</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/06.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/06.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 8</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/07.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/07.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 9</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/08.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/08.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 10</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/09.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/09.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 11</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/010.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/010.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 12</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/011.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/011.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 11</figcaption>
-                                </figure>
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/012.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="https://laravel.pixelstrap.com/viho/assets/images/lightgallry/012.jpg" itemprop="thumbnail" alt="Image description"></a>
-                                    <figcaption itemprop="caption description">Image caption 12</figcaption>
-                                </figure>
+                                @endforeach
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Price product</label>

@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use App\Models\Category;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,9 +28,10 @@ Route::prefix('/')->group(function () {
         return view('client.shop');
     });
     Route::get('/products/{id}', [ProductController::class, 'show']);
-    Route::get('/cart', function () {
-        return view('client.cart');
-    });
+
+    Route::resource('/cart', CartController::class);
+    Route::get('/add-cart/{id}', [CartController::class, 'addCart'])->name('add-cart');
+
     Route::get('/empty-cart', function () {
         return view('client.empty-cart');
     });
@@ -54,24 +59,31 @@ Route::prefix('/')->group(function () {
     Route::get('/contact', function () {
         return view('client.contact');
     });
+
+    Route::get('/tag/{tag}', [ProductController::class, 'tag']);
 });
 
-Route::post('users/login', [UserController::class, 'checkLogin'])->name('users.login');
-Route::get('users/logout', [UserController::class, 'logout'])->name('users.logout');
+Route::middleware('userLogin')->prefix('/users')->group(function () {
+    Route::get('login', [UserController::class, 'login'])->name('users.login');
+    Route::post('login', [UserController::class, 'checkLogin'])->name('users.login');
+});
+Route::get('logout', [UserController::class, 'logout'])->name('users.logout');
 
 Route::resource('users', UserController::class);
-
+Route::resource('shop', ShopController::class);
 // Admin client
 Route::prefix('/admin')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('admin.index');
 
+    Route::get('/categories/status', [CategoryController::class, 'updateStatusCategory'])
+        ->name('admin.updateStatusCategory');
+    Route::get('/products/status', [ProductController::class, 'updateStatusProduct'])
+        ->name('admin.updateStatusProduct');
+    Route::get('/users/status', [UserController::class, 'updateStatusUser'])
+        ->name('admin.updateStatusUser');
+
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
-
-    // Route::resources([
-    //     'categories' => 'CategoriesController',
-    //     'products' => 'ProductController'
-    // ]);
 });

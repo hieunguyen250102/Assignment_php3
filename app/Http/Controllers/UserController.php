@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -18,7 +19,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('client.login');
+        $users = User::where('role', '=', 1)->get();
+        return view('admin.account.index', [
+            'users' => $users
+        ]);
     }
 
     /**
@@ -109,9 +113,17 @@ class UserController extends Controller
     {
         //
     }
-
-    public function checkLogin(UserRequest $request)
+    public function login()
     {
+        return view('client.login');
+    }
+
+    public function checkLogin(Request $request)
+    {
+        $validate = $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
         $email = $request->email;
         $password = $request->password;
 
@@ -123,6 +135,8 @@ class UserController extends Controller
             } else {
                 return redirect()->route('client.index');
             }
+        } else {
+            return redirect()->route('users.login')->with('error', 'Email or password is incorrect');
         }
     }
 
@@ -131,6 +145,19 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('users.index');
+        return redirect()->route('users.login');
+    }
+
+    public function getAccount()
+    {
+    }
+
+    public function updateStatusUser(User $User, Request $request)
+    {
+        // dd($request->status);
+        $User = User::find($request->id);
+        $User->fill($request->all());
+        $User->save();
+        return redirect()->route('users.index')->with('alert', 'Update status successfully!!');
     }
 }
