@@ -2,21 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Session;
+// session_start();
 
 class ShopController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    // public function __construct(Request $request)
+    // {
+    //     $newCart = $request->session()->get('Cart');
+    //     if (!isset($newCart)) {
+    //         return false;
+    //     } else {
+    //         $output = '';
+    //         $count = 0;
+    //         foreach ($newCart->products as $item) {
+    //             $count++;
+    //             $output .= '
+    //         <li class="offcanvas-cart-item-single">
+    //         <div class="offcanvas-cart-item-block">
+    //             <a href="#" class="offcanvas-cart-item-image-link">
+    //                 <img src=" ' . asset('storage/images/product/' . $item['productInfo']->image) . '" alt="" class="offcanvas-cart-image">
+    //             </a>
+    //             <div class="offcanvas-cart-item-content">
+    //                 <a href="#" class="offcanvas-cart-item-link">' . $item['productInfo']->name . '</a>
+    //                 <div class="offcanvas-cart-item-details">
+    //                     <span class="offcanvas-cart-item-details-quantity">' . $item['quantity'] . ' x </span>
+    //                     <span class="offcanvas-cart-item-details-price">$' . $item['productInfo']->price . '</span>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         <div class="offcanvas-cart-item-delete text-right">
+    //             <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+    //         </div>
+    //     </li>
+    //         ';
+    //         }
+
+    //         $total = '
+    //     <div class="offcanvas-cart-total-price">
+    //         <span class="offcanvas-cart-total-price-text">Subtotal:</span>
+    //         <span class="offcanvas-cart-total-price-value">$' . $newCart->totalPrice . '</span>
+    //     </div>';
+    //         $result = '<ul class="offcanvas-cart">' . $output . $total . '</ul>';
+    //         $quantityCount = '
+    //     <i class="icon-bag"></i>
+    //     <span class="item-count bag">' . $count . '</span>';
+    //         return Response([$result, $quantityCount]);
+    //     }
+    // }
     public function index()
     {
         $categories = Category::all();
         $products = Product::select('id', 'name', 'image', 'image_list', 'description', 'summary', 'price', 'sale_price')->paginate(12);
+        foreach ($products as $product) {
+            $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
+            $product->summary = str_replace("</p>", "", $product->summary);
+            $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
+            $product->description = str_replace("</p>", "", $product->description);
+        }
+
         return view('client.shop', [
             'categories' => $categories,
             'products' => $products

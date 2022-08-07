@@ -125,7 +125,39 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $splitImage = explode(",", $product->image_list);
+        $product->image_list = $splitImage;
+
+        $data = $request->all();
+        // dd($data);
+        if ($request->hasFile('image')) {
+            $destination_path = 'public/images/product';
+            $image = $request->file('image');
+            $image_name = $image->getClientOriginalName();
+            $path = $request->file('image')->storeAs($destination_path, $image_name);
+            $data['image'] = $image_name;
+        } else {
+            $data['image'] = $product->image;
+        }
+
+        $files = [];
+        if ($request->hasFile('image_list')) {
+            foreach ($request->file('image_list') as $file) {
+                $name = time() . rand(1, 100) . '.' . $file->extension();
+                $file->move(public_path('images/product'), $name);
+                $files[] = $name;
+                $data['image_list'] = implode(",", $files);
+            }
+        }else {
+            $data['image_list'] = $product->image_list;
+        }
+
+            if(!($request->tag)) {
+                $data['tag'] = '';
+            }                
+        $product->update($data);
+        return redirect()->route('products.index')->with('alert', 'Update successfully!!');
     }
 
     /**

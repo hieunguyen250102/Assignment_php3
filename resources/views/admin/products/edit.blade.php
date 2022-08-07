@@ -123,7 +123,7 @@
                             <div class="gallery my-gallery card-body row" itemscope="" data-pswp-uid="1">
                                 @foreach ($product->image_list as $img)
                                 <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="{{asset('storage/images/product/'. $img)}}" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="{{asset('storage/images/product/'. $img)}}" itemprop="thumbnail" alt="Image description"></a>
+                                    <a href="{{asset('files/'. $img)}}" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="{{asset('files/'. $img)}}" itemprop="thumbnail" alt="Image description"></a>
                                 </figure>
                                 @endforeach
                             </div>

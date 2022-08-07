@@ -82,7 +82,7 @@
                             </div>
 
                             <div class="product-add-to-cart-btn">
-                                <a href="#" class="btn btn-block btn-lg btn-black-default-hover" data-bs-toggle="modal" data-bs-target="#modalAddcart">+ Add To Cart</a>
+                                <a onclick="addToCart(<?php echo $product->id ?>)" class="btn btn-block btn-lg btn-black-default-hover">+ Add To Cart</a>
                             </div>
                         </div>
                         <!-- Start  Product Details Meta Area-->

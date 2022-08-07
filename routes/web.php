@@ -24,10 +24,8 @@ Route::prefix('/')->group(function () {
     Route::get('/', function () {
         return view('client.index');
     })->name('client.index');
-    Route::get('/shop', function () {
-        return view('client.shop');
-    });
-    Route::get('/products/{id}', [ProductController::class, 'show']);
+
+    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
     Route::resource('/cart', CartController::class);
     Route::get('/add-cart/{id}', [CartController::class, 'addCart'])->name('add-cart');

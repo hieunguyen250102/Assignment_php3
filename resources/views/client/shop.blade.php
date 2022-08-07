@@ -236,7 +236,7 @@
                                                         </a>
                                                         <div class="action-link">
                                                             <div class="action-link-left">
-                                                                <a href="{{route('add-cart',$product->id)}}" >Add to Cart</a>
+                                                                <a onclick="addToCart(<?php echo $product->id ?>)" href="{{ route('add-cart', $product->id) }}" id="btn-add-to-cart" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
                                                                 <!-- data-bs-toggle="modal" data-bs-target="#modalAddcart" -->
                                                             </div>
                                                             <div class="action-link-right">
@@ -301,7 +301,7 @@
                                                         @endif
                                                         <p>{{$product->summary}}</p>
                                                         <div class="product-action-icon-link-list">
-                                                            <a href="{{route('add-cart',$product->id)}}" data-bs-toggle="modal" data-bs-target="#modalAddcart" class="btn btn-lg btn-black-default-hover">Add to
+                                                            <a onclick="addToCart(<?php echo $product->id ?>)" href="javascript:0" class="btn btn-lg btn-black-default-hover">Add to
                                                                 cart</a>
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview" class="btn btn-lg btn-black-default-hover"><i class="icon-magnifier"></i></a>
                                                             <a href="wishlist.html" class="btn btn-lg btn-black-default-hover"><i class="icon-heart"></i></a>
@@ -333,5 +333,4 @@
         </div>
     </div>
 </div> <!-- ...:::: End Shop Section:::... -->
-
 @endsection

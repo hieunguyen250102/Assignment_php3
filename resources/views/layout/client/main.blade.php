@@ -35,7 +35,30 @@
     <link rel="stylesheet" href="{{asset('/css/vendor/vendor.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/plugins/plugins.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/style.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+
+    <!-- 
+    RTL version
+-->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.rtl.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css" />
 </head>
 
 <body>
@@ -46,9 +69,26 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="{{asset('/js/vendor/vendor.min.js')}}"></script>
     <script src="{{asset('/js/plugins/plugins.min.js')}}"></script>
-
     <!-- Main JS -->
     <script src="{{asset('/js/main.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.26/sweetalert2.min.js"></script>
+    <script>
+        function addToCart(id) {
+            $.ajax({
+                type: 'get',
+                url: '/add-cart/' + id,
+            }).done(function(response) {
+                console.log(response);
+                // $('#change-item-cart').empty();
+                // $('#change-item-cart').html(response);
+                $('#bag').html(response);
+                alertify.notify('Add to cart successfully!', 'success', 5, function() {
+                    console.log('dismissed');
+                })
+            });
+        }
+    </script>
 </body>
 
 

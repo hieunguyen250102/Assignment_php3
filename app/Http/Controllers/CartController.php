@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Session;
-
+// session_start();
 class CartController extends Controller
 {
     /**
@@ -14,9 +15,9 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return view('client.cart');
     }
 
     /**
@@ -85,14 +86,59 @@ class CartController extends Controller
         //
     }
 
-    public function addCart($id)
+    public function addCart(Request $request, $id)
     {
-        $product = Product::find($id);
-        if ($product !== null) {
-            $oldCart = Session('Cart') ? Session('Cart') : null;
-            $newCart = new Cart($oldCart);
-            $newCart->addCart($product, $id);
+        if ($request->ajax()) {
+            $product = Product::find($id);
+            if ($product !== null) {
+                // if ($request->session()->has('Cart')) {
+                //     $oldCart = Session('Cart');
+                // } else {
+                //     $oldCart = null;
+                // }
+                // // $oldCart = Session('Cart') ? Session('Cart') : null;
+                // $newCart = new Cart($oldCart);
+                // $newCart->addCart($product, $id);
+                // $request->session()->put('Cart', $newCart);
+                // $output = '';
+                $count = 0;
+                $cart = session()->get('cart', []);
+
+                if (isset($cart[$id])) {
+                    $cart[$id]['quantity']++;
+                } else {
+                    $cart[$id] = [
+                        "name" => $product->name,
+                        "quantity" => 1,
+                        "price" => $product->price,
+                        "image" => $product->image
+                    ];
+                }
+                session()->put('cart', $cart);
+                foreach (session('cart') as $items) {
+                    $item = Cart::where('product_id', '=', $product->id)
+                        ->where('user_id', '=', Auth::user()->id)
+                        ->orWhere('user_id', '=', 0)->get();
+                    $item = count($item) ? $item[0] : null;
+                    $count++;
+                    if ($item == null) {
+                        $cart = new Cart();
+                        $cart->product_id = $id;
+                        $cart->quantity = $items['quantity'];
+                        $cart->user_id = 0;
+                        $cart->save();
+                    } else {
+                        $cart->quantity = $items['quantity'];
+                        $cart->save();
+                    }
+                }
+                $quantityCount = '
+                <i class="icon-bag"></i>
+                <span class="item-count bag">' . $count . '</span>';
+                return Response($quantityCount);
+                return redirect()->back()->with('success', 'Product added to cart successfully!');
+            }
         }
-        dd($newCart);
+        // return Response([$result, $quantityCount]);
     }
 }
