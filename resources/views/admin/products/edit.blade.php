@@ -100,8 +100,10 @@
                         <h5>Edit category</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('products.store')}}" method="POST" class="theme-form" enctype="multipart/form-data">
-                            {!! csrf_field() !!}
+                        <form action="{{route('products.update',$product->id)}}" method="POST" class="theme-form" enctype="multipart/form-data">
+                            <input type="hidden" name="id" value="{{$product->id}}">
+                            @csrf
+                            @method('PUT')
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Name product</label>
                                 <input value="{{$product->name}}" name="name" class="form-control <?php echo ($errors->first('name') ? 'is-invalid' : ' ') ?>" id="exampleInputEmail1" type="text" placeholder="Enter name product" value="{{old('name')}}">
@@ -109,7 +111,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Image product</label>
-                                <input name="image" class="form-control <?php echo ($errors->first('image') ? 'is-invalid' : ' ') ?>" type="file" >
+                                <input name="image" class="form-control <?php echo ($errors->first('image') ? 'is-invalid' : ' ') ?>" type="file">
                                 <div class="invalid-feedback">{{$errors->first('image')}}</div>
                                 <div class="mb-3 mt-3">
                                     <img width="100px" src="{{asset('storage/images/product/'.$product->image)}}" alt="">
@@ -120,21 +122,31 @@
                                 <input name="image_list[]" class="form-control <?php echo ($errors->first('image_list') ? 'is-invalid' : ' ') ?>" type="file" multiple>
                                 <div class="invalid-feedback">{{$errors->first('image_list')}}</div>
                             </div>
-                            <div class="gallery my-gallery card-body row" itemscope="" data-pswp-uid="1">
-                                @foreach ($product->image_list as $img)
-                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
-                                    <a href="{{asset('files/'. $img)}}" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="{{asset('files/'. $img)}}" itemprop="thumbnail" alt="Image description"></a>
-                                </figure>
-                                @endforeach
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="gallery my-gallery card-body row" itemscope="" data-pswp-uid="1">
+                                                @foreach ($product->image_list as $img)
+                                                <figure class="col-xl-3 col-md-4 xl-33" itemprop="associatedMedia" itemscope="">
+                                                    <a href="https://laravel.pixelstrap.com/viho/assets/images/big-lightgallry/01.jpg" itemprop="contentUrl" data-size="1600x950"><img class="img-thumbnail" src="{{asset('images/product/'. $img)}}" itemprop="thumbnail" alt="Image description"></a>
+                                                    <figcaption itemprop="caption description">Image caption 1</figcaption>
+                                                </figure>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Price product</label>
-                                <input name="price" class="form-control <?php echo ($errors->first('price') ? 'is-invalid' : ' ') ?>" type="number">
+                                <input value="{{$product->price}}" name="price" class="form-control <?php echo ($errors->first('price') ? 'is-invalid' : ' ') ?>" type="number">
                                 <div class="invalid-feedback">{{$errors->first('price')}}</div>
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Sale price product</label>
-                                <input name="sale_price" class="form-control <?php echo ($errors->first('sale_price') ? 'is-invalid' : ' ') ?>" type="number">
+                                <input value="{{$product->sale_price}}" name="sale_price" class="form-control <?php echo ($errors->first('sale_price') ? 'is-invalid' : ' ') ?>" type="number">
                                 <div class="invalid-feedback">{{$errors->first('sale_price')}}</div>
                             </div>
                             <div class="mb-3">
@@ -155,7 +167,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Summary product</label>
-                                <textarea name="summary" class="form-control <?php echo ($errors->first('summary') ? 'is-invalid' : ' ') ?>" id="summary"></textarea>
+                                <textarea value="{{$product->summary}}" name="summary" class="form-control <?php echo ($errors->first('summary') ? 'is-invalid' : ' ') ?>" id="summary">{{$product->summary}}</textarea>
                                 <script>
                                     CKEDITOR.replace('summary');
                                 </script>
@@ -163,7 +175,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Description product</label>
-                                <textarea name="description" class="form-control <?php echo ($errors->first('description') ? 'is-invalid' : ' ') ?>" id="description"></textarea>
+                                <textarea value="{{$product->description}}" name="description" class="form-control <?php echo ($errors->first('description') ? 'is-invalid' : ' ') ?>" id="description">{{$product->description}}</textarea>
                                 <script>
                                     CKEDITOR.replace('description');
                                 </script>
@@ -174,11 +186,11 @@
                                     <label class="col-form-label col-sm-3 pt-0">Status</label>
                                     <div class="col-sm-9">
                                         <div class="form-check radio radio-primary">
-                                            <input class="form-check-input <?php echo ($errors->first('status') ? 'is-invalid' : ' ') ?>" <?php echo ($errors->first('status') ? 'required' : ' ') ?> id="radio11" type="radio" name="status" value="0">
+                                            <input <?php echo $product->status == 0 ? 'checked' : '' ?> class="form-check-input <?php echo ($errors->first('status') ? 'is-invalid' : ' ') ?>" <?php echo ($errors->first('status') ? 'required' : ' ') ?> id="radio11" type="radio" name="status" value="0">
                                             <label class="form-check-label" for="radio11">Show</label>
                                         </div>
                                         <div class="form-check radio radio-primary">
-                                            <input class="form-check-input <?php echo ($errors->first('status') ? 'is-invalid' : ' ') ?>" <?php echo ($errors->first('status') ? 'required' : ' ') ?> id="radio22" type="radio" name="status" value="1">
+                                            <input <?php echo $product->status == 1 ? 'checked' : '' ?> class="form-check-input <?php echo ($errors->first('status') ? 'is-invalid' : ' ') ?>" <?php echo ($errors->first('status') ? 'required' : ' ') ?> id="radio22" type="radio" name="status" value="1">
                                             <label class="form-check-label" for="radio22">Hidden</label>
                                         </div>
                                     </div>
@@ -190,7 +202,7 @@
                                 <select name="category_id" class="form-select digits <?php echo ($errors->first('category_id') ? 'is-invalid' : ' ') ?>" id="exampleFormControlSelect9">
                                     <option value="">Please select category</option>
                                     @foreach ($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option <?php echo $product->category_id == $category->id ? 'selected' : '' ?> value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
                                 </select>
                                 <div class="invalid-feedback">{{$errors->first('category_id')}}</div>

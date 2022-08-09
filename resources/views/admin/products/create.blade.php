@@ -124,8 +124,6 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row my-gallery gallery" id="aniimated-thumbnials" itemscope="" data-pswp-uid="1">
-                                                <figure class="col-md-3 img-hover hover-1 gallery" itemprop="associatedMedia" itemscope="">
-                                                </figure>
                                             </div>
                                         </div>
                                     </div>

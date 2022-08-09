@@ -11,11 +11,11 @@
                 <!-- Nav tabs -->
                 <div class="dashboard_tab_button" data-aos="fade-up" data-aos-delay="0">
                     <ul role="tablist" class="nav flex-column dashboard-list">
-                        <li><a href="#dashboard" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover active">Dashboard</a>
-                        </li>
+                        <!-- <li><a href="#dashboard" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover active">Dashboard</a>
+                        </li> -->
                         <li> <a href="#orders" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Orders</a></li>
-                        <li><a href="#downloads" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Downloads</a></li>
-                        <li><a href="#address" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Addresses</a></li>
+                        <!-- <li><a href="#downloads" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Downloads</a></li>
+                        <li><a href="#address" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Addresses</a></li> -->
                         <li><a href="#account-details" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Account details</a>
                         </li>
                         <li><a href="login.html" class="nav-link btn btn-block btn-md btn-black-default-hover">logout</a></li>
@@ -24,45 +24,67 @@
             </div>
             <div class="col-sm-12 col-md-9 col-lg-9">
                 <!-- Tab panes -->
-                <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
+                <!-- <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
                     <div class="tab-pane fade show active" id="dashboard">
                         <h4>Dashboard </h4>
                         <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent
                                 orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">Edit your password and account details.</a></p>
+                    </div> -->
+                <div class="tab-pane fade" id="orders" data-aos="fade-up" data-aos-delay="200">
+                    <h4>Orders</h4>
+                    @if(Session::has('success'))
+                    <div class="alert alert-success w-100 ml-30">
+                        <p class="text-success">{{Session::get('success')}}</p>
                     </div>
-                    <div class="tab-pane fade" id="orders">
-                        <h4>Orders</h4>
-                        <div class="table_page table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Order</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Total</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>May 10, 2018</td>
-                                        <td><span class="success">Completed</span></td>
-                                        <td>$25.00 for 1 item </td>
-                                        <td><a href="cart.html" class="view">view</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>May 10, 2018</td>
-                                        <td>Processing</td>
-                                        <td>$17.00 for 1 item </td>
-                                        <td><a href="cart.html" class="view">view</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    @endif
+                    <div class="table_page table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($orders as $order)
+                                <tr>
+                                    <td>{{$order->id}}</td>
+                                    <td>{{$order->date}}</td>
+                                    @if($order->status == 0)
+                                    <td><span>Pending</span></td>
+                                    @elseif ($order->status == 1)
+                                    <td><span class="text-warning">Confirmed</span></td>
+                                    @elseif ($order->status == 2)
+                                    <td><span class="text-primary">On delivery</span></td>
+                                    @elseif($order->status == 3)
+                                    <td><span class="text-success">Delivered</span></td>
+                                    @else
+                                    <td><span class="text-danger">Canceled</span></td>
+                                    @endif
+                                    <td>${{number_format($order->totalAll)}}</td>
+                                    @if($order->status !== 4)
+                                    <td>
+                                        <form action="{{route('order.updateStatus')}}" method="POST">
+                                            <input type="hidden" name="status" value="4">
+                                            <input type="hidden" name="id" value="{{$order->id}}">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="view">Cancel</button>
+                                        </form>
+                                    </td>
+                                    @else
+                                    <td><a href="{{route('order-detail',$order->id)}}" class="view">View</a></td>
+                                    @endif
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="tab-pane fade" id="downloads">
+                </div>
+                <!-- <div class="tab-pane fade" id="downloads">
                         <h4>Downloads</h4>
                         <div class="table_page table-responsive">
                             <table>
@@ -99,58 +121,57 @@
                         <address>
                             Address: Your address goes here.
                         </address>
-                    </div>
-                    <div class="tab-pane fade" id="account-details">
-                        <h3>Account details </h3>
-                        <div class="login">
-                            <div class="login_form_container">
-                                <div class="account_login_form">
-                                    <form action="#">
-                                        <p>Already have an account? <a href="#">Log in instead!</a></p>
-                                        <div class="input-radio">
-                                            <span class="custom-radio"><input type="radio" value="1" name="id_gender"> Mr.</span>
-                                            <span class="custom-radio"><input type="radio" value="1" name="id_gender"> Mrs.</span>
-                                        </div> <br>
-                                        <div class="default-form-box mb-20">
-                                            <label>First Name</label>
-                                            <input type="text" name="first-name">
-                                        </div>
-                                        <div class="default-form-box mb-20">
-                                            <label>Last Name</label>
-                                            <input type="text" name="last-name">
-                                        </div>
-                                        <div class="default-form-box mb-20">
-                                            <label>Email</label>
-                                            <input type="text" name="email-name">
-                                        </div>
-                                        <div class="default-form-box mb-20">
-                                            <label>Password</label>
-                                            <input type="password" name="user-password">
-                                        </div>
-                                        <div class="default-form-box mb-20">
-                                            <label>Birthdate</label>
-                                            <input type="date" name="birthday">
-                                        </div>
-                                        <span class="example">
-                                            (E.g.: 05/31/1970)
-                                        </span>
-                                        <br>
-                                        <label class="checkbox-default" for="offer">
-                                            <input type="checkbox" id="offer">
-                                            <span>Receive offers from our partners</span>
-                                        </label>
-                                        <br>
-                                        <label class="checkbox-default checkbox-default-more-text" for="newsletter">
-                                            <input type="checkbox" id="newsletter">
-                                            <span>Sign up for our newsletter<br><em>You may unsubscribe at any
-                                                    moment. For that purpose, please find our contact info in the
-                                                    legal notice.</em></span>
-                                        </label>
-                                        <div class="save_button mt-3">
-                                            <button class="btn btn-md btn-black-default-hover" type="submit">Save</button>
-                                        </div>
-                                    </form>
-                                </div>
+                    </div> -->
+                <div class="tab-pane fade" id="account-details">
+                    <h3>Account details </h3>
+                    <div class="login">
+                        <div class="login_form_container">
+                            <div class="account_login_form">
+                                <form action="#">
+                                    <p>Already have an account? <a href="#">Log in instead!</a></p>
+                                    <div class="input-radio">
+                                        <span class="custom-radio"><input type="radio" value="1" name="id_gender"> Mr.</span>
+                                        <span class="custom-radio"><input type="radio" value="1" name="id_gender"> Mrs.</span>
+                                    </div> <br>
+                                    <div class="default-form-box mb-20">
+                                        <label>First Name</label>
+                                        <input type="text" name="first-name">
+                                    </div>
+                                    <div class="default-form-box mb-20">
+                                        <label>Last Name</label>
+                                        <input type="text" name="last-name">
+                                    </div>
+                                    <div class="default-form-box mb-20">
+                                        <label>Email</label>
+                                        <input type="text" name="email-name">
+                                    </div>
+                                    <div class="default-form-box mb-20">
+                                        <label>Password</label>
+                                        <input type="password" name="user-password">
+                                    </div>
+                                    <div class="default-form-box mb-20">
+                                        <label>Birthdate</label>
+                                        <input type="date" name="birthday">
+                                    </div>
+                                    <span class="example">
+                                        (E.g.: 05/31/1970)
+                                    </span>
+                                    <br>
+                                    <label class="checkbox-default" for="offer">
+                                        <input type="checkbox" id="offer">
+                                        <span>Receive offers from our partners</span>
+                                    </label>
+                                    <br>
+                                    <label class="checkbox-default checkbox-default-more-text" for="newsletter">
+                                        <input type="checkbox" id="newsletter">
+                                        <span>Sign up for our newsletter<br><em>You may unsubscribe at any
+                                                moment. For that purpose, please find our contact info in the
+                                                legal notice.</em></span>
+                                    </label>
+                                    <div class="save_button mt-3">
+                                        <button class="btn btn-md btn-black-default-hover" type="submit">Save</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

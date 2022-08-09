@@ -73,50 +73,56 @@
                             <div class="product-stock"> <span class="product-stock-in"><i class="ion-checkmark-circled"></i></span> 200 IN STOCK</div>
                         </div>
                         <!-- Product Variable Single Item -->
-                        <div class="d-flex align-items-center ">
-                            <div class="variable-single-item ">
-                                <span>Quantity</span>
-                                <div class="product-variable-quantity">
-                                    <input min="1" max="100" value="1" type="number">
+                        <form action="{{route('cart.store')}}" method="post">
+                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                            @csrf
+                            <div class="d-flex align-items-center ">
+                                <div class="variable-single-item ">
+                                    <span>Quantity</span>
+                                    <div class="product-variable-quantity">
+                                        <input min="1" max="100" value="1" type="number" name="quantity">
+                                    </div>
+                                </div>
+
+                                <div class="product-add-to-cart-btn">
+                                    <button class="btn btn-block btn-lg btn-black-default-hover">+ Add To Cart</button>
                                 </div>
                             </div>
+                        </form>
+                    </div>
+                    <!-- Start  Product Details Meta Area-->
+                    <div class="product-details-meta mb-20">
+                        <a href="wishlist.html" class="icon-space-right"><i class="icon-heart"></i>Add to
+                            wishlist</a>
+                        <a href="compare.html" class="icon-space-right"><i class="icon-refresh"></i>Compare</a>
+                    </div> <!-- End  Product Details Meta Area-->
+                </div> <!-- End Product Variable Area -->
 
-                            <div class="product-add-to-cart-btn">
-                                <a onclick="addToCart(<?php echo $product->id ?>)" class="btn btn-block btn-lg btn-black-default-hover">+ Add To Cart</a>
-                            </div>
-                        </div>
-                        <!-- Start  Product Details Meta Area-->
-                        <div class="product-details-meta mb-20">
-                            <a href="wishlist.html" class="icon-space-right"><i class="icon-heart"></i>Add to
-                                wishlist</a>
-                            <a href="compare.html" class="icon-space-right"><i class="icon-refresh"></i>Compare</a>
-                        </div> <!-- End  Product Details Meta Area-->
-                    </div> <!-- End Product Variable Area -->
-
-                    <!-- Start  Product Details Catagories Area-->
-                    <div class="product-details-catagory mb-2">
-                        <span class="title">TAG:</span>
-                        <ul>
-                            @foreach ($product->tag as $productTag)
-                            <li><a href="{{'/tag/'. str_slug($productTag)}}">{{$productTag}}</a></li>
-                            @endforeach
-                        </ul>
-                    </div> <!-- End  Product Details Catagories Area-->
-                    <!-- Start  Product Details Social Area-->
-                    <div class="product-details-social">
-                        <span class="title">SHARE THIS PRODUCT:</span>
-                        <ul>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div> <!-- End  Product Details Social Area-->
-                </div>
+                <!-- Start  Product Details Catagories Area-->
+                <div class="product-details-catagory mb-2">
+                    <span class="title">TAG:</span>
+                    <ul>
+                        @foreach ($product->tag as $productTag)
+                        <li><a href="{{'/tag/'. str_slug($productTag)}}">{{$productTag}}</a></li>
+                        @endforeach
+                    </ul>
+                </div> <!-- End  Product Details Catagories Area-->
+                <!-- Start  Product Details Social Area-->
+                <div class="product-details-social">
+                    <span class="title">SHARE THIS PRODUCT:</span>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div> <!-- End  Product Details Social Area-->
             </div>
         </div>
     </div>
+</div>
 </div> <!-- End Product Details Section -->
 
 <!-- Start Product Content Tab Section -->
@@ -181,16 +187,16 @@
                                 <div class="single-tab-content-item">
                                     <!-- Start - Review Comment -->
                                     <ul class="comment">
-                                        <!-- Start - Review Comment list-->
+                                        @foreach ($comments as $cmt)
                                         <li class="comment-list">
                                             <div class="comment-wrapper">
                                                 <div class="comment-img">
-                                                    <img src="{{asset('/images/user/image-1.png')}}" alt="">
+                                                    <img src="{{asset('storage/images/avatar/'. $cmt->avatar)}}" alt="">
                                                 </div>
                                                 <div class="comment-content">
                                                     <div class="comment-content-top">
                                                         <div class="comment-content-left">
-                                                            <h6 class="comment-name">Kaedyn Fraser</h6>
+                                                            <h6 class="comment-name">{{$cmt->firtsname}} {{$cmt->lastname}}</h6>
                                                             <ul class="review-star">
                                                                 <li class="fill"><i class="ion-android-star"></i>
                                                                 </li>
@@ -210,95 +216,21 @@
                                                     </div>
 
                                                     <div class="para-content">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Tempora inventore dolorem a unde modi iste odio amet,
-                                                            fugit fuga aliquam, voluptatem maiores animi dolor nulla
-                                                            magnam ea! Dignissimos aspernatur cumque nam quod sint
-                                                            provident modi alias culpa, inventore deserunt
-                                                            accusantium amet earum soluta consequatur quasi eum eius
-                                                            laboriosam, maiores praesentium explicabo enim dolores
-                                                            quaerat! Voluptas ad ullam quia odio sint sunt. Ipsam
-                                                            officia, saepe repellat. </p>
+                                                        <p>{{$cmt->content}} </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Start - Review Comment Reply-->
-                                            <ul class="comment-reply">
-                                                <li class="comment-reply-list">
-                                                    <div class="comment-wrapper">
-                                                        <div class="comment-img">
-                                                            <img src="{{asset('/images/user/image-2.png')}}" alt="">
-                                                        </div>
-                                                        <div class="comment-content">
-                                                            <div class="comment-content-top">
-                                                                <div class="comment-content-left">
-                                                                    <h6 class="comment-name">Oaklee Odom</h6>
-                                                                </div>
-                                                                <div class="comment-content-right">
-                                                                    <a href="#"><i class="fa fa-reply"></i>Reply</a>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="para-content">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur
-                                                                    adipisicing elit. Tempora inventore dolorem a
-                                                                    unde modi iste odio amet, fugit fuga aliquam,
-                                                                    voluptatem maiores animi dolor nulla magnam ea!
-                                                                    Dignissimos aspernatur cumque nam quod sint
-                                                                    provident modi alias culpa, inventore deserunt
-                                                                    accusantium amet earum soluta consequatur quasi
-                                                                    eum eius laboriosam, maiores praesentium
-                                                                    explicabo enim dolores quaerat! Voluptas ad
-                                                                    ullam quia odio sint sunt. Ipsam officia, saepe
-                                                                    repellat. </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul> <!-- End - Review Comment Reply-->
-                                        </li> <!-- End - Review Comment list-->
-                                        <!-- Start - Review Comment list-->
-                                        <li class="comment-list">
-                                            <div class="comment-wrapper">
-                                                <div class="comment-img">
-                                                    <img src="{{asset('/images/user/image-3.png')}}" alt="">
-                                                </div>
-                                                <div class="comment-content">
-                                                    <div class="comment-content-top">
-                                                        <div class="comment-content-left">
-                                                            <h6 class="comment-name">Jaydin Jones</h6>
-                                                            <ul class="review-star">
-                                                                <li class="fill"><i class="ion-android-star"></i>
-                                                                </li>
-                                                                <li class="fill"><i class="ion-android-star"></i>
-                                                                </li>
-                                                                <li class="fill"><i class="ion-android-star"></i>
-                                                                </li>
-                                                                <li class="fill"><i class="ion-android-star"></i>
-                                                                </li>
-                                                                <li class="empty"><i class="ion-android-star"></i>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="comment-content-right">
-                                                            <a href="#"><i class="fa fa-reply"></i>Reply</a>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="para-content">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Tempora inventore dolorem a unde modi iste odio amet,
-                                                            fugit fuga aliquam, voluptatem maiores animi dolor nulla
-                                                            magnam ea! Dignissimos aspernatur cumque nam quod sint
-                                                            provident modi alias culpa, inventore deserunt
-                                                            accusantium amet earum soluta consequatur quasi eum eius
-                                                            laboriosam, maiores praesentium explicabo enim dolores
-                                                            quaerat! Voluptas ad ullam quia odio sint sunt. Ipsam
-                                                            officia, saepe repellat. </p>
-                                                    </div>
-                                                </div>
+                                            @if(Auth::user()->id === $cmt->user_id)
+                                            <div class="product-add-to-cart-btn w30">
+                                                <form action="{{route('comment.destroy',$cmt->id)}}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-block btn-lg btn-black-default-hover">Delete comment</button>
+                                                </form>
                                             </div>
+                                            @endif
                                         </li> <!-- End - Review Comment list-->
+                                        @endforeach
                                     </ul> <!-- End - Review Comment -->
                                     <div class="review-form">
                                         <div class="review-form-text-top">
@@ -307,6 +239,7 @@
                                                 *</p>
                                         </div>
 
+                                        @if(!Auth::check())
                                         <form action="#" method="post">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -333,6 +266,25 @@
                                                 </div>
                                             </div>
                                         </form>
+                                        @else
+                                        <form action="{{route('comment.store')}}" method="post">
+                                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="default-form-box">
+                                                        <label for="comment-review-text">Your review
+                                                            <span>*</span></label>
+                                                        <textarea name="content" id="comment-review-text" placeholder="Write a review" required></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <button class="btn btn-md btn-black-default-hover" type="submit">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div> <!-- End Product Details Tab Content Singel -->

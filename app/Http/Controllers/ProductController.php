@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -41,18 +43,6 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        // $flash = $request->flash([
-        //     'name' => $request->name,
-        //     'image' => $request->image,
-        //     'image_list' => $request->image_list,
-        //     'description' => $request->description,
-        //     'summary' => $request->summary,
-        //     'price' => $request->price,
-        //     'sale_price' => $request->sale_price,
-        //     'tag' => $request->tag,
-        //     'status' => $request->status,
-        //     'category_id' => $request->category_id,
-        // ]);
         $data = $request->all();
         // dd($data);
         if ($request->hasFile('image')) {
@@ -86,6 +76,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        
         if ($product) {
             $splitImage = explode(",", $product->image_list);
             $product->image_list = $splitImage;
@@ -123,11 +114,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         $product = Product::find($id);
-        $splitImage = explode(",", $product->image_list);
-        $product->image_list = $splitImage;
+
+        // $splitImage = explode(",", $product->image_list);
+        // $product->image_list = $splitImage;
 
         $data = $request->all();
         // dd($data);
@@ -147,15 +139,15 @@ class ProductController extends Controller
                 $name = time() . rand(1, 100) . '.' . $file->extension();
                 $file->move(public_path('images/product'), $name);
                 $files[] = $name;
-                $data['image_list'] = implode(",", $files);
             }
-        }else {
+        } else {
             $data['image_list'] = $product->image_list;
         }
+        // $data['image_list'] = implode(",", $files);
 
-            if(!($request->tag)) {
-                $data['tag'] = '';
-            }                
+        if (!($request->tag)) {
+            $data['tag'] = $product->tag;
+        }
         $product->update($data);
         return redirect()->route('products.index')->with('alert', 'Update successfully!!');
     }

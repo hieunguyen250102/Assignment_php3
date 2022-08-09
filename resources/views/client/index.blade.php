@@ -89,9 +89,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#offcanvas-add-cart" class="offcanvas-toggle">
+                                    <a href="{{route('cart.index')}}" class="" id="bag">
                                         <i class="icon-bag"></i>
-                                        <span class="item-count">3</span>
                                     </a>
                                 </li>
                                 <li>
@@ -359,7 +358,7 @@
                 @if(Auth::user()->role === 0)
                 <a href="{{route('admin.index')}}">Dashboard Admin</a>
                 @endif
-                <a href="/account"><span>My account</span></a>
+                <a href="{{route('order.show',Auth::user()->id)}}"><span>My account</span></a>
                 <a href="{{route('users.logout')}}">Logout</a>
             </address>
             @endif
@@ -2189,13 +2188,15 @@
     <script>
         function addToCart(id) {
             $.ajax({
+                type: 'get',
                 url: '/add-cart/' + id,
-                type: 'GET',
-            }).done(function(response) {
-                console.log(response);
-                $('#change-item-cart').empty();
-                $('#change-item-cart').html(response);
-            })
+                success: function(response) {
+                    $('#bag').html(response);
+                    alertify.notify('Add to cart successfully!', 'success', 5, function() {
+                        console.log('dismissed');
+                    })
+                }
+            });
         }
     </script>
 </body>

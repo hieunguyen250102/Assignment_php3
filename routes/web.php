@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
@@ -29,7 +31,11 @@ Route::prefix('/')->group(function () {
 
     Route::resource('/cart', CartController::class);
     Route::get('/add-cart/{id}', [CartController::class, 'addCart'])->name('add-cart');
+    Route::get('/delete-cart/{id}', [CartController::class, 'deleteCart'])->name('delete-cart');
+    Route::patch('update-cart/', [CartController::class, 'updateCart'])->name('update-cart');
 
+    Route::resource('/order', OrderController::class);
+    Route::get('order-detail/{id}',[OrderController::class, 'showOrderDetail'])->name('order-detail');
     Route::get('/empty-cart', function () {
         return view('client.empty-cart');
     });
@@ -42,9 +48,10 @@ Route::prefix('/')->group(function () {
     Route::get('/checkout', function () {
         return view('client.checkout');
     });
-    Route::get('/account', function () {
-        return view('client.account');
-    });
+
+    Route::put('updateStatusOrder', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
+    Route::get('listOrder', [OrderController::class, 'showAdmin'])->name('order.list');
+    Route::resource('orders',OrderController::class);
     Route::get('/blogs', function () {
         return view('client.blogs');
     });
@@ -69,8 +76,9 @@ Route::get('logout', [UserController::class, 'logout'])->name('users.logout');
 
 Route::resource('users', UserController::class);
 Route::resource('shop', ShopController::class);
+Route::resource('comment', CommentController::class);
 // Admin client
-Route::prefix('/admin')->group(function () {
+Route::middleware('checkAdmin')->prefix('/admin')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('admin.index');
@@ -84,4 +92,7 @@ Route::prefix('/admin')->group(function () {
 
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
+
+    Route::get('order-detail/{id}',[OrderController::class, 'showOrderDetailAdmin'])->name('admin.order-detail');
+
 });

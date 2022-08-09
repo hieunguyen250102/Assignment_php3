@@ -26,23 +26,27 @@
                                 </thead> <!-- End Cart Table Head -->
                                 <tbody>
                                     <!-- Start Cart Single Item-->
-                                    @if(session('cart'))
-                                    @foreach(session('cart') as $id => $details)
+                                    @foreach($carts as $details)
                                     <?php
                                     $total = 0;
-                                    $total += $details['price'] * $details['quantity']
+                                    $total += $details['price'] * $details['quantity'];
+                                    // $totalFlag = ($total += $total);
                                     ?>
                                     <tr>
-                                        <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a>
-                                        </td>
+                                        <form action="{{route('cart.destroy',$details->id)}}" method="POST">
+                                            @csrf
+                                            @method("DELETE")
+                                            <td class="product_remove"><button type="submit" style="cursor:pointer" class="fa fa-trash-o"></button>
+                                            </td>
+                                        </form>
                                         <td class="product_thumb"><a href="product-details-default.html"><img src="{{asset('storage/images/product/' . $details['image'])}}" alt=""></a></td>
                                         <td class="product_name"><a href="">{{ $details['name'] }}</a></td>
-                                        <td class="product-price">${{ $details['price'] }}</td>
-                                        <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="{{ $details['quantity'] }}" type="number"></td>
-                                        <td class="product_total">${{$total}}</td>
+                                        <td class="product-price">${{ number_format($details['price']) }}</td>
+                                        <td class="product_quantity update-cart quantity"><label>Quantity</label> <input min="1" max="100" value="{{ $details['quantity'] }}" type="number" name="quantity"></td>
+                                        <td class="product_total">${{number_format($total)}}</td>
+                                        <p hidden>{{$totalAll+=$details['price'] * $details['quantity']}}</p>
                                     </tr>
                                     @endforeach
-                                    @endif
                                     <!-- End Cart Single Item-->
                                 </tbody>
                             </table>
@@ -76,20 +80,17 @@
                         <div class="coupon_inner">
                             <div class="cart_subtotal">
                                 <p>Subtotal</p>
-                                <p class="cart_amount">$215.00</p>
-                            </div>
-                            <div class="cart_subtotal ">
-                                <p>Shipping</p>
-                                <p class="cart_amount"><span>Flat Rate:</span> $255.00</p>
-                            </div>
-                            <a href="#">Calculate shipping</a>
-
-                            <div class="cart_subtotal">
-                                <p>Total</p>
-                                <p class="cart_amount">$215.00</p>
+                                <p class="cart_amount">${{number_format($totalAll)}}</p>
                             </div>
                             <div class="checkout_btn">
-                                <a href="#" class="btn btn-md btn-golden">Proceed to Checkout</a>
+                                <form action="{{route('order.index')}}" method="POST">
+                                    @method('GET')
+                                    <input type="hidden" name="totalAll" value="{{$totalAll}}">
+                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                    <input type="hidden" name="carts" value="{{$carts}}">
+                                    @csrf
+                                    <button class="btn btn-md btn-golden">Proceed to Checkout</button>
+                                </form>
                             </div>
                         </div>
                     </div>

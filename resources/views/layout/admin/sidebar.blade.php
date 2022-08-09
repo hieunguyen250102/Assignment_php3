@@ -71,6 +71,9 @@
                     <li>
                         <a href="{{route('users.index')}}" class="nav-link menu-title"><i data-feather="user"></i><span>Account</span></a>
                     </li>
+                    <li>
+                        <a href="{{route('order.list')}}" class="nav-link menu-title"><i data-feather="shopping-cart"></i><span>Order</span></a>
+                    </li>
                     <li class="sidebar-main-title">
                         <div>
                             <h6>Components</h6>

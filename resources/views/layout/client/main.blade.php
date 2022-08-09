@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>THERANKME - @yield('title-page')</title>
 
     <!-- ::::::::::::::Favicon icon::::::::::::::-->
@@ -71,21 +71,45 @@
     <script src="{{asset('/js/plugins/plugins.min.js')}}"></script>
     <!-- Main JS -->
     <script src="{{asset('/js/main.js')}}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.26/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script>
         function addToCart(id) {
             $.ajax({
                 type: 'get',
                 url: '/add-cart/' + id,
-            }).done(function(response) {
-                console.log(response);
-                // $('#change-item-cart').empty();
-                // $('#change-item-cart').html(response);
-                $('#bag').html(response);
-                alertify.notify('Add to cart successfully!', 'success', 5, function() {
-                    console.log('dismissed');
-                })
+                success: function(response) {
+                    $('#bag').html(response);
+                    alertify.notify('Add to cart successfully!', 'success', 5, function() {
+                        console.log('dismissed');
+                    })
+                }
+            });
+            $.ajaxSetup({
+                headers: {
+                    'csrftoken': '{{ csrf_token() }}'
+                }
+            });
+        }
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+        });
+
+        
+        function deleteCart(id) {
+            $.ajax({
+                type: 'get',
+                url: '/delete-cart/' + id,
+                success: function(response) {
+                    // $('#bag').html(response);
+                    alertify.notify('Delete successfully!', 'error', 5, function() {
+                        console.log('dismissed');
+                    })
+                }
             });
         }
     </script>

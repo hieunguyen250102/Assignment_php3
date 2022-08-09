@@ -14,7 +14,7 @@
                 <div class="account_form" data-aos="fade-up" data-aos-delay="0">
                     <h3>Login</h3>
                     @if(Session::has('error'))
-                    <div class="alert alert-primary w-50 ml-30">
+                    <div class="alert alert-danger w-100 ml-30">
                         <p class="font-light">{{Session::get('error')}}</p>
                     </div>
                     @endif

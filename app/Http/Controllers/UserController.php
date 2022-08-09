@@ -130,10 +130,10 @@ class UserController extends Controller
         // dd(Auth::attempt(['email' => $email, 'password' => $password]));
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $auth = Auth::user();
-            if ($auth->role == 0) {
-                return redirect()->route('admin.index');
-            } else {
+            if ($auth->role == 1 && $auth->status == 1) {
                 return redirect()->route('client.index');
+            } else if ($auth->role == 0 && $auth->status == 1) {
+                return redirect()->route('admin.index');
             }
         } else {
             return redirect()->route('users.login')->with('error', 'Email or password is incorrect');

@@ -318,7 +318,7 @@
             @if(Auth::user()->role === 0)
             <a href="{{route('admin.index')}}">Dashboard Admin</a>
             @endif
-            <a href="/account"><span>My account</span></a>
+            <a href="{{route('order.show',Auth::user()->id)}}"><span>My account</span></a>
             <a href="{{route('users.logout')}}">Logout</a>
         </address>
         @endif

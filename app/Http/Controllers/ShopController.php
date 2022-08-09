@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Session;
 // session_start();
@@ -64,7 +66,8 @@ class ShopController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $products = Product::select('id', 'name', 'image', 'image_list', 'description', 'summary', 'price', 'sale_price')->paginate(12);
+        $products = Product::where('status','=',1)
+        ->paginate(12);
         foreach ($products as $product) {
             $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
             $product->summary = str_replace("</p>", "", $product->summary);
@@ -108,6 +111,7 @@ class ShopController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        $comments = Comment::select('comments.*', 'users.firtsname', 'users.lastname', 'users.avatar')->join('users', 'comments.user_id', '=', 'users.id')->where('product_id', '=', $id)->get();
         $product['image_list'] = explode(',', $product['image_list']);
         $product['tag'] = explode(',', $product['tag']);
         $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
@@ -115,7 +119,8 @@ class ShopController extends Controller
         $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
         $product->description = str_replace("</p>", "", $product->description);
         return view('client.product', [
-            'product' => $product
+            'product' => $product,
+            'comments' => $comments
         ]);
     }
 
