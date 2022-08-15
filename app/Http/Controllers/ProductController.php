@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -16,11 +17,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = Product::select('id', 'name', 'status', 'image', 'price', 'tag', 'sale_price', 'description', 'image_list', 'status', 'category_id')
-            // ->cursorPaginate(5);
-            ->paginate(10);
+        // ->cursorPaginate(5);
+        ->paginate(10);
+    
         return view('admin.products.index', ['products' => $products]);
     }
 
@@ -44,7 +46,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->all();
-        // dd($data);
+        
         if ($request->hasFile('image')) {
             $destination_path = 'public/images/product';
             $image = $request->file('image');
@@ -76,7 +78,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        
+
         if ($product) {
             $splitImage = explode(",", $product->image_list);
             $product->image_list = $splitImage;
@@ -167,16 +169,22 @@ class ProductController extends Controller
 
     public function tag(Request $request)
     {
-        $products = Product::where('status', 0)->where('name', 'LIKE', '%' . $request->tag . '%')
+        $categories = Category::all();
+        $products = Product::where('status', 1)->where('name', 'LIKE', '%' . $request->tag . '%')
             ->orWhere('tag', 'LIKE', '%' . $request->tag . '%')->paginate(12);
-        foreach ($products as $product) {
-            $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
-            $product->summary = str_replace("</p>", "", $product->summary);
-            $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
-            $product->description = str_replace("</p>", "", $product->description);
+        if (count($products)) {
+            foreach ($products as $product) {
+                $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
+                $product->summary = str_replace("</p>", "", $product->summary);
+                $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
+                $product->description = str_replace("</p>", "", $product->description);
+            }
+        } else {
+            $products = null;
         }
         return view('client.tag', [
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ]);
     }
 
@@ -187,5 +195,49 @@ class ProductController extends Controller
         $Product->fill($request->all());
         $Product->save();
         return redirect()->route('products.index')->with('alert', 'Update status successfully!!');
+    }
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $products = DB::table('products')->where('name', 'LIKE', '%' . $request->search . '%')->get();
+            if ($products) {
+                foreach ($products as $product) {
+                    $output .= '
+                    <tr>
+                    <td>
+                        <div class="checkbox checkbox-dark">
+                            <input id="solid" type="checkbox" value="' . $product->id . '">
+                            <label for="solid"></label>
+                        </div>
+                    </td>
+                    <th scope="row">' . $product->id . '</th>
+                    <td>' . $product->name . '</td>
+                    <td>
+                        <img width="100px" src="' . asset('storage/images/product/' . $product->image) . '" alt="">
+                    </td>';
+                    if ($product->status == 0) {
+                        $status = '<td>
+                        <a href="' . route('admin.updateStatusProduct', ['id' => $product->id, 'status' => 1]) . '" class="btn btn-info"><i class="fa-solid fa-eye-slash"></i></a>
+                    </td>';
+                    } else {
+                        $status = ' <td>
+                        <a href="' . route('admin.updateStatusProduct', ['id' => $product->id, 'status' => 0]) . '" class="btn btn-light"><i class="fa-solid fa-eye"></i></a>
+                    </td>';
+                    }
+                    $option = '
+                    <td>
+                        <a href="' . route('products.edit', ['product' => $product->id]) . '">
+                            <button class="btn btn-warning">Edit</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="' . route('products.destroy', ['product' => $product->id]) . '" class="btn btn-danger btnDelete">Delete</a>
+                    </td>
+                </tr>';
+                }
+            }
+            return Response($output . $status . $option);
+        }
     }
 }

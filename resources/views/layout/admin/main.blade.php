@@ -20,19 +20,19 @@
     <!-- Font Awesome-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/fontawesome.css')}}" />
     <!-- ico-font-->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/icofont.css')}}" />
+    <!-- <link rel="stylesheet" type="text/css" href="{{asset('assets/css/icofont.css')}}" /> -->
     <!-- Themify icon-->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/themify.css')}}" />
+    <!-- <link rel="stylesheet" type="text/css" href="{{asset('assets/css/themify.css')}}" /> -->
     <!-- Flag icon-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/flag-icon.css')}}" />
     <!-- Feather icon-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/feather-icon.css')}}" />
     <!-- Plugins css start-->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/animate.css')}}" />
+    <!-- <link rel="stylesheet" type="text/css" href="{{asset('assets/css/animate.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/chartist.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/date-picker.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/prism.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vector-map.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vector-map.css')}}" /> -->
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.css')}}" />
@@ -40,9 +40,11 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}" />
     <link id="color" rel="stylesheet" href="{{asset('assets/css/color-1.css')}}" media="screen" />
     <!-- Responsive css-->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.css')}}" />
+    <!-- <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.css')}}" /> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
 </head>
 
 <body>
@@ -75,7 +77,6 @@
     </div>
 </body>
 @yield('js')
-<script src="{{asset('assets/js/jquery-3.5.1.min.js')}}"></script>
 <!-- feather icon js-->
 <script src="{{asset('assets/js/icons/feather-icon/feather.min.js')}}"></script>
 <script src="{{asset('assets/js/icons/feather-icon/feather-icon.js')}}"></script>
@@ -90,7 +91,7 @@
 <script src="{{asset('assets/js/chart/chartist/chartist-plugin-tooltip.js')}}"></script>
 <script src="{{asset('assets/js/chart/knob/knob.min.js')}}"></script>
 <script src="{{asset('assets/js/chart/knob/knob-chart.js')}}"></script>
-<script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
+<!-- <script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script> -->
 <script src="{{asset('assets/js/chart/apex-chart/stock-prices.js')}}"></script>
 <script src="{{asset('assets/js/prism/prism.min.js')}}"></script>
 <script src="{{asset('assets/js/clipboard/clipboard.min.js')}}"></script>

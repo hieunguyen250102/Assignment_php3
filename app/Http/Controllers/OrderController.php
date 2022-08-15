@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -112,7 +113,7 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OrderUpdateRequest $request, $id)
     {
         // dd($request->all())
         $order = Order::find($id);

@@ -76,6 +76,9 @@ Route::get('logout', [UserController::class, 'logout'])->name('users.logout');
 
 Route::resource('users', UserController::class);
 Route::resource('shop', ShopController::class);
+Route::get('/search/product',[ShopController::class,'search'])->name('search');
+Route::get('/filter/product',[ShopController::class,'searchFilter'])->name('filter');
+
 Route::resource('comment', CommentController::class);
 // Admin client
 Route::middleware('checkAdmin')->prefix('/admin')->group(function () {
@@ -92,7 +95,7 @@ Route::middleware('checkAdmin')->prefix('/admin')->group(function () {
 
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
-
+    Route::get('/product-search',[ProductController::class,'search'])->name('search');
     Route::get('order-detail/{id}',[OrderController::class, 'showOrderDetailAdmin'])->name('admin.order-detail');
 
 });

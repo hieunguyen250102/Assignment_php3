@@ -2,6 +2,76 @@
 @section('title-page','Shop')
 @section('title','Shop')
 @section('content')
+<style>
+    input[type=range] {
+        -webkit-appearance: none;
+        margin: 20px 0;
+    }
+
+    input[type=range]:focus {
+        outline: none;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        height: 4px;
+        cursor: pointer;
+        background: #03a9f4;
+        border-radius: 25px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 1);
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -8px;
+    }
+
+    input[type=range]:focus::-webkit-slider-runnable-track {
+        background: #03a9f4;
+    }
+
+    .range-wrap {
+        position: relative;
+    }
+
+    .range-value {
+        position: absolute;
+        top: -50%;
+    }
+
+    .range-value span {
+        width: 30px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        background: #03a9f4;
+        color: #fff;
+        font-size: 12px;
+        display: block;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        border-radius: 6px;
+    }
+
+    .range-value span:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 10px solid #03a9f4;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        margin-top: -1px;
+    }
+</style>
 <div class="shop-section">
     <div class="container">
         <div class="row flex-column-reverse flex-lg-row">
@@ -14,8 +84,8 @@
                         <h6 class="sidebar-title">CATEGORIES</h6>
                         <div class="sidebar-content">
                             <ul class="sidebar-menu">
-                                @foreach($categories as $category) 
-                                    <li><a href="">{{$category->name}}</a></li>
+                                @foreach($categories as $category)
+                                <li id="category_id" data-id="{{$category->id}}" onclick="searchFilter()">{{$category->name}}</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -25,110 +95,34 @@
                     <div class="sidebar-single-widget">
                         <h6 class="sidebar-title">FILTER BY PRICE</h6>
                         <div class="sidebar-content">
-                            <div id="slider-range"></div>
-                            <div class="filter-type-price">
-                                <label for="amount">Price range:</label>
-                                <input type="text" id="amount">
+                            <!-- <div id="slider-range"></div> -->
+                            <div class="range-wrap">
+                                <input type="range" id="rangeMin" name="minimum_price" min="1" max="1000" step="1" value="0">
+                                <div class="filter-type-price">
+                                    <!-- <label for="amount">Price range:</label> -->
+                                    <div class="range-value" id="rangeMinV"></div>
+                                </div>
+                                <input type="range" id="rangeMax" name="max_price" min="1" max="1000" step="1" value="0">
+                                <div class="filter-type-price">
+                                    <!-- <label for="amount">Price range:</label> -->
+                                    <div class="range-value" id="rangeMaxV"></div>
+                                </div>
                             </div>
                         </div>
-                    </div> <!-- End Single Sidebar Widget -->
-
-                    <!-- Start Single Sidebar Widget -->
-                    <div class="sidebar-single-widget">
-                        <h6 class="sidebar-title">MANUFACTURER</h6>
-                        <div class="sidebar-content">
-                            <div class="filter-type-select">
-                                <ul>
-                                    <li>
-                                        <label class="checkbox-default" for="brakeParts">
-                                            <input type="checkbox" id="brakeParts">
-                                            <span>Brake Parts(6)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-default" for="accessories">
-                                            <input type="checkbox" id="accessories">
-                                            <span>Accessories (10)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-default" for="EngineParts">
-                                            <input type="checkbox" id="EngineParts">
-                                            <span>Engine Parts (4)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-default" for="hermes">
-                                            <input type="checkbox" id="hermes">
-                                            <span>hermes (10)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-default" for="tommyHilfiger">
-                                            <input type="checkbox" id="tommyHilfiger">
-                                            <span>Tommy Hilfiger(7)</span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> <!-- End Single Sidebar Widget -->
-
-                    <!-- Start Single Sidebar Widget -->
-                    <div class="sidebar-single-widget">
-                        <h6 class="sidebar-title">SELECT BY COLOR</h6>
-                        <div class="sidebar-content">
-                            <div class="filter-type-select">
-                                <ul>
-                                    <li>
-                                        <label class="checkbox-default" for="black">
-                                            <input type="checkbox" id="black">
-                                            <span>Black (6)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-default" for="blue">
-                                            <input type="checkbox" id="blue">
-                                            <span>Blue (8)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-default" for="brown">
-                                            <input type="checkbox" id="brown">
-                                            <span>Brown (10)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-default" for="Green">
-                                            <input type="checkbox" id="Green">
-                                            <span>Green (6)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-default" for="pink">
-                                            <input type="checkbox" id="pink">
-                                            <span>Pink (4)</span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> <!-- End Single Sidebar Widget -->
-
-                    <!-- Start Single Sidebar Widget -->
+                    </div>
+                    <!-- End Single Sidebar Widget -->
                     <div class="sidebar-single-widget">
                         <h6 class="sidebar-title">Tag products</h6>
                         <div class="sidebar-content">
                             <div class="tag-link">
-                                <a href="#">asian</a>
-                                <a href="#">brown</a>
-                                <a href="#">euro</a>
-                                <a href="#">fashion</a>
-                                <a href="#">hat</a>
-                                <a href="#">t-shirt</a>
-                                <a href="#">teen</a>
-                                <a href="#">travel</a>
-                                <a href="#">white</a>
+                                <?php
+                                $tag = [];
+                                foreach ($products as $product) {
+                                    $tag = explode(',', $product->tag);
+                                };
+                                foreach ($tag as $tg) { ?>
+                                    <a href="{{'/tag/'. str_slug($tg)}}">{{$tg}}</a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div> <!-- End Single Sidebar Widget -->
@@ -170,20 +164,9 @@
 
                                 <!-- Start Sort Select Option -->
                                 <div class="sort-select-list d-flex align-items-center">
-                                    <label class="mr-2">Sort By:</label>
-                                    <form action="#">
-                                        <fieldset>
-                                            <select name="speed" id="speed">
-                                                <option>Sort by average rating</option>
-                                                <option>Sort by popularity</option>
-                                                <option selected="selected">Sort by newness</option>
-                                                <option>Sort by price: low to high</option>
-                                                <option>Sort by price: high to low</option>
-                                                <option>Product Name: Z</option>
-                                            </select>
-                                        </fieldset>
-                                    </form>
-                                </div> <!-- End Sort Select Option -->
+                                    <input style="border: 1px solid #9a9a9a;padding:5px; width:100%" type="text" name="search" id="searchAjax" placeholder="Search">
+                                </div>
+                                <!-- End Sort Select Option -->
 
 
 
@@ -200,7 +183,7 @@
                                 <div class="tab-content tab-animate-zoom">
                                     <!-- Start Grid View Product -->
                                     <div class="tab-pane active show sort-layout-single" id="layout-3-grid">
-                                        <div class="row">
+                                        <div class="row" id="rowProduct">
                                             @foreach ($products as $product)
                                             <div class="col-xl-4 col-sm-6 col-12">
                                                 <!-- Start Product Default Single Item -->
@@ -250,7 +233,7 @@
                                     </div> <!-- End Grid View Product -->
                                     <!-- Start List View Product -->
                                     <div class="tab-pane sort-layout-single" id="layout-list">
-                                        <div class="row">
+                                        <div class="row" id="rowProduct">
                                             @foreach ($products as $product)
                                             <div class="col-12">
                                                 <!-- Start Product Defautlt Single -->
@@ -296,6 +279,9 @@
                 </div> <!-- End Tab Wrapper -->
 
                 <!-- Start Pagination -->
+                <table>
+                    <tbody></tbody>
+                </table>
                 <div class="page-pagination text-center" data-aos="fade-up" data-aos-delay="0">
                     <ul>
                         <!-- <li><a class="active" href="#">1</a></li>
@@ -308,5 +294,145 @@
             </div>
         </div>
     </div>
-</div> <!-- ...:::: End Shop Section:::... -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    $('#searchAjax').on('keyup', function() {
+        $value = $(this).val();
+        $.ajax({
+            type: 'get',
+            url: '/search/product',
+            data: {
+                'search': $value,
+            },
+            success: function(data) {
+                $('#rowProduct').html(data);
+            }
+        });
+    })
+    
+    function searchFilter() {
+        var minimum_price = $('#rangeMin').val();
+        var maximum_price = $('#rangeMax').val();
+        var category_id = $('#category_id').attr('data-id');
+        console.log(category_id);
+        console.log(minimum_price);
+        console.log(maximum_price);
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'get',
+            url: '/filter/product',
+            data: {
+                'minimum_price': minimum_price,
+                'maximum_price': maximum_price,
+                'category_id': category_id,
+            },
+            success: function(data) {
+                $('#rowProduct').html(data);
+            }
+        });
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+    }
+    
+    $('#rangeMin').on('change', function() {
+        var minimum_price = $('#rangeMin').val();
+        var maximum_price = $('#rangeMax').val();
+        var category_id = $('#category_id').attr('data-id');
+        console.log(category_id);
+        console.log(minimum_price);
+        console.log(maximum_price);
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'get',
+            url: '/filter/product',
+            data: {
+                'minimum_price': minimum_price,
+                'maximum_price': maximum_price,
+                'category_id': category_id,
+            },
+            success: function(data) {
+                $('#rowProduct').html(data);
+            }
+        });
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+    });
+    $('#rangeMax').on('change', function() {
+        var minimum_price = $('#rangeMax').val();
+        var maximum_price = $('#rangeMax').val();
+        var category_id = $('#category_id').attr('data-id');
+        console.log(category_id);
+        console.log(minimum_price);
+        console.log(maximum_price);
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'get',
+            url: '/filter/product',
+            data: {
+                'minimum_price': minimum_price,
+                'maximum_price': maximum_price,
+                'category_id': category_id,
+            },
+            success: function(data) {
+                $('#rowProduct').html(data);
+            }
+        });
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+    });
+
+    const
+        rangeMin = document.getElementById('rangeMin'),
+        rangeMax = document.getElementById('rangeMax'),
+        rangeMinV = document.getElementById('rangeMinV'),
+        rangeMaxV = document.getElementById('rangeMaxV'),
+        setValueMin = () => {
+            const
+                newValue = Number((rangeMin.value - rangeMin.min) * 100 / (rangeMin.max - rangeMin.min)),
+                newPosition = 10 - (newValue * 0.2);
+            rangeMinV.innerHTML = `<span>${rangeMin.value}</span>`;
+            rangeMinV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+        };
+    setValueMax = () => {
+        const
+            newValue = Number((rangeMax.value - rangeMax.min) * 100 / (rangeMax.max - rangeMax.min)),
+            newPosition = 10 - (newValue * 0.2);
+        rangeMaxV.innerHTML = `<span>${rangeMax.value}</span>`;
+        rangeMaxV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+    };
+    document.addEventListener("DOMContentLoaded", setValueMin);
+    document.addEventListener("DOMContentLoaded", setValueMax);
+    rangeMin.addEventListener('input', setValueMin);
+    rangeMax.addEventListener('input', setValueMax);
+</script>
+<!-- ...:::: End Shop Section:::... -->
 @endsection

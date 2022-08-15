@@ -8,7 +8,14 @@
             <div class="card">
                 <div class="card-header">
                     <h5>List products</h5>
-                    <a href="{{route('products.create')}}"><button class="btn btn-primary mt-3">Create</button></a>
+                    <div style="display: flex; justify-content:space-between">
+                        <div>
+                            <a href="{{route('products.create')}}"><button class="btn btn-primary mt-3">Create</button></a>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" id="searchPro" name="search"></input>
+                        </div>
+                    </div>
                 </div>
                 @if(Session::has('alert'))
                 <div class="alert alert-primary w-50 ml-30">
@@ -77,7 +84,6 @@
     </div>
 </div>
 @section('js')
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
     $('.btnDelete').click(function(e) {
         e.preventDefault();
@@ -88,9 +94,25 @@
         }
     })
 
-    if ($('#solidAll').is(":checked")) {
-        console.log($('#solid').val());
-    }
+    $('#searchPro').on('keyup', function() {
+        var value = $(this).val();
+        $.ajax({
+            type: 'get',
+            url: 'product-search/',
+            data: {
+                'search': value
+            },
+            success: function(data) {
+                console.log(data);
+                $('tbody').html(data);
+            }
+        });
+    })
+    $.ajaxSetup({
+        headers: {
+            'csrftoken': '{{ csrf_token() }}'
+        }
+    });
 </script>
 @endsection
 @endsection

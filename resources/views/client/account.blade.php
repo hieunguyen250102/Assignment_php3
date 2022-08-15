@@ -51,20 +51,20 @@
                             <tbody>
                                 @foreach($orders as $order)
                                 <tr>
-                                    <td>{{$order->id}}</td>
-                                    <td>{{$order->date}}</td>
+                                    <td><a href="{{route('order-detail',$order->id)}}">{{$order->id}}</a></td>
+                                    <td><a href="{{route('order-detail',$order->id)}}">{{$order->date}}</a></td>
                                     @if($order->status == 0)
-                                    <td><span>Pending</span></td>
+                                    <td><a href="{{route('order-detail',$order->id)}}">Pending</a></td>
                                     @elseif ($order->status == 1)
-                                    <td><span class="text-warning">Confirmed</span></td>
+                                    <td><a href="{{route('order-detail',$order->id)}}" class="text-warning">Confirmed</a></td>
                                     @elseif ($order->status == 2)
-                                    <td><span class="text-primary">On delivery</span></td>
+                                    <td><a href="{{route('order-detail',$order->id)}}" class="text-primary">On delivery</a></td>
                                     @elseif($order->status == 3)
-                                    <td><span class="text-success">Delivered</span></td>
+                                    <td><a href="{{route('order-detail',$order->id)}}" class="text-success">Delivered</a></td>
                                     @else
-                                    <td><span class="text-danger">Canceled</span></td>
+                                    <td><a href="{{route('order-detail',$order->id)}}" class="text-danger">Canceled</a></td>
                                     @endif
-                                    <td>${{number_format($order->totalAll)}}</td>
+                                    <td><a href="{{route('order-detail',$order->id)}}">${{number_format($order->totalAll)}}</a></td>
                                     @if($order->status !== 4)
                                     <td>
                                         <form action="{{route('order.updateStatus')}}" method="POST">

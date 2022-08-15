@@ -14,33 +14,9 @@
                         <h6 class="sidebar-title">CATEGORIES</h6>
                         <div class="sidebar-content">
                             <ul class="sidebar-menu">
-                                <li>
-                                    <ul class="sidebar-menu-collapse">
-                                        <!-- Start Single Menu Collapse List -->
-                                        <li class="sidebar-menu-collapse-list">
-                                            <div class="accordion">
-                                                <a href="#" class="accordion-title collapsed" data-bs-toggle="collapse" data-bs-target="#men-fashion" aria-expanded="false">Men <i class="ion-ios-arrow-right"></i></a>
-                                                <div id="men-fashion" class="collapse">
-                                                    <ul class="accordion-category-list">
-                                                        <li><a href="#">Dresses</a></li>
-                                                        <li><a href="#">Jackets &amp; Coats</a></li>
-                                                        <li><a href="#">Sweaters</a></li>
-                                                        <li><a href="#">Jeans</a></li>
-                                                        <li><a href="#">Blouses &amp; Shirts</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li> <!-- End Single Menu Collapse List -->
-                                    </ul>
-                                </li>
-                                <li><a href="#">Football</a></li>
-                                <li><a href="#"> Men's</a></li>
-                                <li><a href="#"> Portable Audio</a></li>
-                                <li><a href="#"> Smart Watches</a></li>
-                                <li><a href="#">Tennis</a></li>
-                                <li><a href="#"> Uncategorized</a></li>
-                                <li><a href="#"> Video Games</a></li>
-                                <li><a href="#">Women's</a></li>
+                                @foreach($categories as $category)
+                                <li><a href="">{{$category->name}}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div> <!-- End Single Sidebar Widget -->
@@ -58,7 +34,7 @@
                     </div> <!-- End Single Sidebar Widget -->
 
                     <!-- Start Single Sidebar Widget -->
-                    <div class="sidebar-single-widget">
+                    <!-- <div class="sidebar-single-widget">
                         <h6 class="sidebar-title">MANUFACTURER</h6>
                         <div class="sidebar-content">
                             <div class="filter-type-select">
@@ -96,10 +72,11 @@
                                 </ul>
                             </div>
                         </div>
-                    </div> <!-- End Single Sidebar Widget -->
+                    </div>  -->
+                    <!-- End Single Sidebar Widget -->
 
                     <!-- Start Single Sidebar Widget -->
-                    <div class="sidebar-single-widget">
+                    <!-- <div class="sidebar-single-widget">
                         <h6 class="sidebar-title">SELECT BY COLOR</h6>
                         <div class="sidebar-content">
                             <div class="filter-type-select">
@@ -137,25 +114,28 @@
                                 </ul>
                             </div>
                         </div>
-                    </div> <!-- End Single Sidebar Widget -->
+                    </div> -->
+                    <!-- End Single Sidebar Widget -->
 
                     <!-- Start Single Sidebar Widget -->
+                    @if($products)
                     <div class="sidebar-single-widget">
                         <h6 class="sidebar-title">Tag products</h6>
                         <div class="sidebar-content">
                             <div class="tag-link">
-                                <a href="#">asian</a>
-                                <a href="#">brown</a>
-                                <a href="#">euro</a>
-                                <a href="#">fashion</a>
-                                <a href="#">hat</a>
-                                <a href="#">t-shirt</a>
-                                <a href="#">teen</a>
-                                <a href="#">travel</a>
-                                <a href="#">white</a>
+                                <?php
+                                $tag = [];
+                                foreach ($products as $product) {
+                                    $tag = explode(',', $product->tag);
+                                };
+                                foreach ($tag as $tg) { ?>
+                                    <a href="{{'/tag/'. str_slug($tg)}}">{{$tg}}</a>
+                                <?php } ?>
                             </div>
                         </div>
-                    </div> <!-- End Single Sidebar Widget -->
+                    </div>
+                    @endif
+                    <!-- End Single Sidebar Widget -->
 
                     <!-- Start Single Sidebar Widget -->
                     <div class="sidebar-single-widget">
@@ -193,7 +173,7 @@
                                 </div> <!-- End Sort tab Button -->
 
                                 <!-- Start Sort Select Option -->
-                                <div class="sort-select-list d-flex align-items-center">
+                                <!-- <div class="sort-select-list d-flex align-items-center">
                                     <label class="mr-2">Sort By:</label>
                                     <form action="#">
                                         <fieldset>
@@ -207,7 +187,8 @@
                                             </select>
                                         </fieldset>
                                     </form>
-                                </div> <!-- End Sort Select Option -->
+                                </div> -->
+                                <!-- End Sort Select Option -->
 
 
 
@@ -224,6 +205,7 @@
                                 <div class="tab-content tab-animate-zoom">
                                     <!-- Start Grid View Product -->
                                     <div class="tab-pane active show sort-layout-single" id="layout-3-grid">
+                                        @if($products != null)
                                         <div class="row">
                                             @foreach ($products as $product)
                                             <div class="col-xl-4 col-sm-6 col-12">
@@ -270,8 +252,14 @@
                                             </div>
                                             @endforeach
                                         </div>
+                                        @else
+                                        <div class="row">
+
+                                        </div>
+                                        @endif
                                     </div> <!-- End Grid View Product -->
                                     <!-- Start List View Product -->
+                                    @if($products != null)
                                     <div class="tab-pane sort-layout-single" id="layout-list">
                                         <div class="row">
                                             <div class="col-12">
@@ -438,6 +426,7 @@
                                             </div>
                                         </div>
                                     </div> <!-- End List View Product -->
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -445,6 +434,7 @@
                 </div> <!-- End Tab Wrapper -->
 
                 <!-- Start Pagination -->
+                @if($products != null)
                 <div class="page-pagination text-center" data-aos="fade-up" data-aos-delay="0">
                     <ul>
                         <!-- <li><a class="active" href="#">1</a></li>
@@ -453,7 +443,9 @@
                         <li><a href="#"><i class="ion-ios-skipforward"></i></a></li> -->
                         {{ $products->links() }}
                     </ul>
-                </div> <!-- End Pagination -->
+                </div>
+                @endif
+                <!-- End Pagination -->
             </div>
         </div>
     </div>

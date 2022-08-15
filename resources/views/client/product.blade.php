@@ -75,7 +75,9 @@
                         <!-- Product Variable Single Item -->
                         <form action="{{route('cart.store')}}" method="post">
                             <input type="hidden" name="product_id" value="{{$product->id}}">
+                            @if(Auth::check())
                             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                            @endif
                             @csrf
                             <div class="d-flex align-items-center ">
                                 <div class="variable-single-item ">
@@ -220,7 +222,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if(Auth::user()->id === $cmt->user_id)
+                                            @if(Auth::check() && Auth::user()->id === $cmt->user_id)
                                             <div class="product-add-to-cart-btn w30">
                                                 <form action="{{route('comment.destroy',$cmt->id)}}" method="post">
                                                     @csrf

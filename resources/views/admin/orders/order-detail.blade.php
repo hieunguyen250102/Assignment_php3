@@ -55,6 +55,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div style="margin-left:950px;margin-top:30px;display:flex"> 
+                                <h6>Total:  </h6> <span>${{number_format($order->totalAll)}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
