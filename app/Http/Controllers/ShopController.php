@@ -21,15 +21,47 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function searchNotAjax(Request $request)
+    {
+        $query = Product::orderBy('created_at', 'desc');
+        $data = $request->all();
+
+        if (isset($request['minium_price']) && isset($request['maximum_price'])) {
+            if ($request['minium_price'] > $request['maximum_price']) {
+                $query->whereBetween('price', $request['maximum_price'], $request['minium_price'],);
+            } else {
+                $query->whereBetween('price', $request['minium_price'], $request['maximum_price']);
+            }
+            if ($request['minium_price'] == $request['maximum_price']) {
+                $query->where('price', '=', $request['maximum_price']);
+            }
+        }
+
+        if (!empty($data['category_id'])) {
+            foreach ($data['category_id'] as $value) {
+                $query->where('category_id', '=', $value);
+            }
+        }
+        $products = $query->where('status', '=', 0)->paginate(5);
+        $categories = Category::all();
+        foreach ($products as $product) {
+            $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
+            $product->summary = str_replace("</p>", "", $product->summary);
+            $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
+            $product->description = str_replace("</p>", "", $product->description);
+        }
+        // $products['tag'] = explode(',', $products['tag']);
+        return view('client.shop', [
+            'categories' => $categories,
+            'products' => $products,
+        ]);
+    }
     public function index(Request $request)
     {
-        $categories = Category::all();
-        $products = Product::where('status', '=', 1)
+        $products = Product::where('status', '=', 0)
             ->paginate(12);
-        // $string = '$360 - $500';
-        // $string = explode(' - $', $string);
-        // $string[0] = ltrim($string[0], '$');
-        // dd($string);
+        $categories = Category::all();
+
         foreach ($products as $product) {
             $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
             $product->summary = str_replace("</p>", "", $product->summary);
@@ -45,71 +77,20 @@ class ShopController extends Controller
 
     public function searchFilter(Request $request)
     {
-        if ($request->ajax()) {
-            $products = new Product();
-            if (isset($request->minimum_price) || isset($request->maximum_price)) {
-                $products->whereBetween('price', [$request->minimum_price, $request->maximum_price]);
-            }
-            if (isset($request->category_id)) {
-                $products->where('category_id', '=', $request->category_idF);
-            }
-            $categories = Category::all();
-            $products->where('status', '=', 1);
-            foreach ($products as $product) {
-                $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
-                $product->summary = str_replace("</p>", "", $product->summary);
-                $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
-                $product->description = str_replace("</p>", "", $product->description);
-            }
-            if ($products) {
-                $output = '';
-                foreach ($products as $key => $product) {
-                    $output .= '
-                        <div class="col-xl-4 col-sm-6 col-12">
-                        <div class="product-default-single-item product-color--golden" data-aos="fade-up" data-aos-delay="0">
-                            <div class="image-box">
-                                <a href="' . route('shop.show', $product->id) . '" class="image-link">
-                                    <img src="' . asset('storage/images/product/' . $product->image) . '" alt="">
-                                    <img src="' . asset('storage/images/product/' . $product->image) . '" alt="">
-                                </a>
-                                <div class="action-link">
-                                    <div class="action-link-left">
-                                        <a onclick="addToCart(<?php echo $product->id ?>)" href="javascript:0" id="btn-add-to-cart" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
-                                        <!-- data-bs-toggle="modal" data-bs-target="#modalAddcart" -->
-                                    </div>
-                                    <div class="action-link-right">
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i class="icon-magnifier"></i></a>
-                                        <a href="wishlist.html"><i class="icon-heart"></i></a>
-                                        <a href="compare.html"><i class="icon-shuffle"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <div class="content-left">
-                                    <h6 class="title"><a href="' . route('shop.show', $product->id) . '">' . $product->name . '</a></h6>
-                                    <ul class="review-star">
-                                        <li class="fill"><i class="ion-android-star"></i>
-                                        </li>
-                                        <li class="fill"><i class="ion-android-star"></i>
-                                        </li>
-                                        <li class="fill"><i class="ion-android-star"></i>
-                                        </li>
-                                        <li class="fill"><i class="ion-android-star"></i>
-                                        </li>
-                                        <li class="empty"><i class="ion-android-star"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="content-right">
-                                    <span class="price">$ ' . $product->price . '</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ';
-                }
-            }
-            return Response($output);
+        $products = new Product();
+        if (isset($request->minimum_price) || isset($request->maximum_price)) {
+            $products->whereBetween('price', [$request->minimum_price, $request->maximum_price]);
+        }
+        if (isset($request->category_id)) {
+            $products->where('category_id', '=', $request->category_idF);
+        }
+        $categories = Category::all();
+        $products->where('status', '=', 1);
+        foreach ($products as $product) {
+            $product->summary = preg_replace("/<p(.*?)>/", "", $product->summary);
+            $product->summary = str_replace("</p>", "", $product->summary);
+            $product->description = preg_replace("/<p(.*?)>/", "", $product->description);
+            $product->description = str_replace("</p>", "", $product->description);
         }
     }
 

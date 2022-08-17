@@ -78,19 +78,27 @@
             <div class="col-lg-3">
                 <!-- Start Sidebar Area -->
                 <div class="siderbar-section" data-aos="fade-up" data-aos-delay="0">
-
-                    <!-- Start Single Sidebar Widget -->
                     <div class="sidebar-single-widget">
                         <h6 class="sidebar-title">CATEGORIES</h6>
                         <div class="sidebar-content">
-                            <ul class="sidebar-menu">
-                                @foreach($categories as $category)
-                                <li id="category_id" data-id="{{$category->id}}" onclick="searchFilter()">{{$category->name}}</li>
-                                @endforeach
-                            </ul>
+                            <form action="{{route('filter')}}" method="POST">
+                                @csrf
+                                <div class="filter-type-select">
+                                    <ul>
+                                        @foreach($categories as $category)
+                                        <li>
+                                            <label class="checkbox-default" for="brakeParts">
+                                                <input type="checkbox" name="category_id[]" value="{{$category->id}}">
+                                                <span>{{$category->name}}</span>
+                                            </label>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                         </div>
-                    </div> <!-- End Single Sidebar Widget -->
-
+                    </div>
+                    <!-- End Single Sidebar Widget -->
+                    <div class="sidebar-content"></div>
                     <!-- Start Single Sidebar Widget -->
                     <div class="sidebar-single-widget">
                         <h6 class="sidebar-title">FILTER BY PRICE</h6>
@@ -102,7 +110,7 @@
                                     <!-- <label for="amount">Price range:</label> -->
                                     <div class="range-value" id="rangeMinV"></div>
                                 </div>
-                                <input type="range" id="rangeMax" name="max_price" min="1" max="1000" step="1" value="0">
+                                <input type="range" id="rangeMax" name="maximum_price" min="1" max="1000" step="1" value="0">
                                 <div class="filter-type-price">
                                     <!-- <label for="amount">Price range:</label> -->
                                     <div class="range-value" id="rangeMaxV"></div>
@@ -110,6 +118,8 @@
                             </div>
                         </div>
                     </div>
+                    <button type="submit" style="border:1px solid #b19361">Search</button>
+                    </form>
                     <!-- End Single Sidebar Widget -->
                     <div class="sidebar-single-widget">
                         <h6 class="sidebar-title">Tag products</h6>
@@ -158,8 +168,9 @@
 
                                     <!-- Start Page Amount -->
                                     <div class="page-amount ml-2">
-                                        <span>Showing 1–9 of 21 results</span>
-                                    </div> <!-- End Page Amount -->
+                                        <!-- <span>Showing 1–9 of 21 results</span> -->
+                                    </div>
+                                    <!-- End Page Amount -->
                                 </div> <!-- End Sort tab Button -->
 
                                 <!-- Start Sort Select Option -->
@@ -288,7 +299,6 @@
                         <li><a href="#">2</a></li>
                         <li><a href="#">3</a></li>
                         <li><a href="#"><i class="ion-ios-skipforward"></i></a></li> -->
-                        {{ $products->links() }}
                     </ul>
                 </div> <!-- End Pagination -->
             </div>
@@ -311,106 +321,7 @@
             }
         });
     })
-    
-    function searchFilter() {
-        var minimum_price = $('#rangeMin').val();
-        var maximum_price = $('#rangeMax').val();
-        var category_id = $('#category_id').attr('data-id');
-        console.log(category_id);
-        console.log(minimum_price);
-        console.log(maximum_price);
-        
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: 'get',
-            url: '/filter/product',
-            data: {
-                'minimum_price': minimum_price,
-                'maximum_price': maximum_price,
-                'category_id': category_id,
-            },
-            success: function(data) {
-                $('#rowProduct').html(data);
-            }
-        });
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-    }
-    
-    $('#rangeMin').on('change', function() {
-        var minimum_price = $('#rangeMin').val();
-        var maximum_price = $('#rangeMax').val();
-        var category_id = $('#category_id').attr('data-id');
-        console.log(category_id);
-        console.log(minimum_price);
-        console.log(maximum_price);
-        
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: 'get',
-            url: '/filter/product',
-            data: {
-                'minimum_price': minimum_price,
-                'maximum_price': maximum_price,
-                'category_id': category_id,
-            },
-            success: function(data) {
-                $('#rowProduct').html(data);
-            }
-        });
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-    });
-    $('#rangeMax').on('change', function() {
-        var minimum_price = $('#rangeMax').val();
-        var maximum_price = $('#rangeMax').val();
-        var category_id = $('#category_id').attr('data-id');
-        console.log(category_id);
-        console.log(minimum_price);
-        console.log(maximum_price);
-        
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: 'get',
-            url: '/filter/product',
-            data: {
-                'minimum_price': minimum_price,
-                'maximum_price': maximum_price,
-                'category_id': category_id,
-            },
-            success: function(data) {
-                $('#rowProduct').html(data);
-            }
-        });
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-    });
-
-    const
+    var
         rangeMin = document.getElementById('rangeMin'),
         rangeMax = document.getElementById('rangeMax'),
         rangeMinV = document.getElementById('rangeMinV'),

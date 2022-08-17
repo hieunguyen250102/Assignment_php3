@@ -72,12 +72,13 @@ Route::middleware('userLogin')->prefix('/users')->group(function () {
     Route::get('login', [UserController::class, 'login'])->name('users.login');
     Route::post('login', [UserController::class, 'checkLogin'])->name('users.login');
 });
+
 Route::get('logout', [UserController::class, 'logout'])->name('users.logout');
 
 Route::resource('users', UserController::class);
 Route::resource('shop', ShopController::class);
 Route::get('/search/product',[ShopController::class,'search'])->name('search');
-Route::get('/filter/product',[ShopController::class,'searchFilter'])->name('filter');
+Route::post('filter-product',[ShopController::class,'searchNotAjax'])->name('filter');
 
 Route::resource('comment', CommentController::class);
 // Admin client
